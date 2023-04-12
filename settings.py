@@ -24,6 +24,10 @@ class Settings:
         self.paddle_y = 60  # Height
         self.tc_paddle_speed = 1  # I refer to ai players as tc players
 
+        # Button settings
+        self.button_color = self.bg_color
+        self.bttn_txt_color = self.paddle_color
+
         # Ball settings
         self.ball_color = (240, 240, 240)
         self.ball_radius = 10
