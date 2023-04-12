@@ -9,9 +9,10 @@ class Button:
         """Initialize button attributes."""
         self.screen = game_instance.screen
         self.screen_rect = self.screen.get_rect()
+        self.setup = game_instance.setup
         self.width, self.height = 100, 50
-        self.button_color = (20, 20, 20)
-        self.text_color = (255, 255, 255)
+        self.button_color = self.setup.button_color
+        self.text_color = self.setup.bttn_txt_color
         self.font = pygame.font.SysFont(None, 50)
         self.rect = pygame.Rect(0, 0, self.width, self.height)
         self.rect.center = self.screen_rect.center
