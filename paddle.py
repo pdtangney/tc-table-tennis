@@ -1,0 +1,38 @@
+"""Module to manage the creation of the paddles."""
+
+
+import pygame
+from pygame.sprite import Sprite
+
+
+class Paddle(Sprite):
+    """Class to generate the paddles.
+
+    Arguments:
+            game_instance - the instance of class TableTennis
+            location - Which side of the screen to put the paddle.
+                       Options: ['L', 'R']
+    """
+
+    def __init__(self, game_instance, location):
+        super().__init__()
+        self.screen = game_instance.screen
+        self.screen_rect = game_instance.screen.get_rect()
+        self.setup = game_instance.setup
+        self.color = self.setup.paddle_color
+        self.rect = pygame.Rect(0, 0, self.setup.paddle_x, self.setup.paddle_y)
+        # width, height
+        if location == 'R':
+            self.rect.midright = self.screen_rect.midright
+        if location == 'L':
+            self.midrect.left = self.screen_rect.midleft
+        self.y = float(self.rect.y)
+        # The above line will be needed when the pace of thegame speeds
+        # up in later levels.
+
+    def update(self):
+        """Update the paddle's position on screen."""
+
+    def draw_paddle(self):
+        """Draw the paddle to the screen."""
+        pygame.draw.rect(self.screen, self.color, self. rect)

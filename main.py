@@ -24,6 +24,8 @@ import sys
 import pygame
 
 from settings import Settings
+from input_controls import KeyboardInput
+from paddle import Paddle
 
 
 class TableTennis:
@@ -34,12 +36,17 @@ class TableTennis:
         pygame.init()
         self.setup = Settings()
         self._init_display()
+        self.clock = pygame.time.Clock()
+        self.FPS = self.setup.FPS
+        self.input_button = KeyboardInput()
+        self.game_active = False
         #gamestats()
         #scoreboard()
-        #player bar
+        self.paddles = pygame.sprite.Group()
+        self.player = Paddle(self, 'R')
+        self.paddles.add(self.player)
         #computer bar
         #button("PLAY")
-        self.FPS = self.setup.FPS
 
     def _init_display(self):
         """Setup the display and window title."""
@@ -50,14 +57,44 @@ class TableTennis:
     def run_game(self):
         """Start the main game loop."""
         while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_q:
-                        sys.exit()
-            self.screen.fill(self.setup.bg_color)
-            pygame.display.flip()
+            self.check_input_events()
+            self._update_screen()
+
+    def check_input_events(self):
+        """Watch for player input events."""
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                self._check_keydown_events(event)
+            if event.type == pygame.KEYUP:
+                self._check_keyup_events(event)
+
+    def _check_keydown_events(self, event):
+        """Respond to key or button presses."""
+        if event.key == self.input_button.player_up:
+            self.player.moving_up = True
+        elif event.key == self.input_button.player_down:
+            self.player.moving_down = True
+        elif event.key == self.input_button.quit_key:
+            sys.exit()
+        elif event.key == self.input_button.pause:
+            self.game_active = False
+
+    def _check_keyup_events(self, event):
+        """Respond to key or button releases."""
+        if event.key == self.input_button.player_up:
+            self.player.moving_up = False
+        elif event.key == self.input_button.player_down:
+            self.player.moving_down = False
+
+    def _update_screen(self):
+        """Refresh objects on screen and flip to the new screen."""
+        self.screen.fill(self.setup.bg_color)
+        self.player.draw_paddle()
+        pygame.display.flip()
+        self.clock.tick(self.setup.FPS)
+
 
 if __name__ == '__main__':
     tc_tt = TableTennis()

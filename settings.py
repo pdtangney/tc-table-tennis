@@ -1,6 +1,5 @@
 """Module to manage configurable settings."""
 
-import pygame
 
 class Settings:
     """
@@ -35,6 +34,5 @@ class Settings:
         self.win_level = 5
 
         # Life settings
-        self.misses_allowed = 3 # ...before losing a life
+        self.misses_allowed = 3  # ...before losing a life
         self.lives = 3
-
