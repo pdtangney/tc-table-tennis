@@ -45,6 +45,8 @@ class TableTennis:
         self.paddles = pygame.sprite.Group()
         self.player = Paddle(self, 'R')
         self.paddles.add(self.player)
+        self.tc_player = Paddle(self, 'L')
+        self.paddles.add(self.tc_player)
         #computer bar
         #button("PLAY")
 
@@ -91,7 +93,8 @@ class TableTennis:
     def _update_screen(self):
         """Refresh objects on screen and flip to the new screen."""
         self.screen.fill(self.setup.bg_color)
-        self.player.draw_paddle()
+        for paddle in self.paddles.sprites():
+            paddle.draw_paddle()
         pygame.display.flip()
         self.clock.tick(self.setup.FPS)
 

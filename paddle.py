@@ -23,9 +23,11 @@ class Paddle(Sprite):
         self.rect = pygame.Rect(0, 0, self.setup.paddle_x, self.setup.paddle_y)
         # width, height
         if location == 'R':
-            self.rect.midright = self.screen_rect.midright
+            self.rect.right = self.screen_rect.right - 20
         if location == 'L':
-            self.midrect.left = self.screen_rect.midleft
+            self.rect.left = self.screen_rect.left + 20
+
+        self.rect.centery = self.screen_rect.centery
         self.y = float(self.rect.y)
         # The above line will be needed when the pace of thegame speeds
         # up in later levels.
