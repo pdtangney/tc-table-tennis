@@ -38,17 +38,15 @@ class TableTennis:
         self.setup = Settings()
         self._init_display()
         self.clock = pygame.time.Clock()
-        self.FPS = self.setup.FPS
         self.input_button = KeyboardInput()
         self.game_active = False
         #gamestats()
         #scoreboard()
         self.paddles = pygame.sprite.Group()
         self.player = Paddle(self, 'R')
-        self.paddles.add(self.player)
         self.tc_player = Paddle(self, 'L')
+        self.paddles.add(self.player)
         self.paddles.add(self.tc_player)
-        #computer bar
         self.play_button = Button(self, "PLAY")
 
     def _init_display(self):
@@ -78,7 +76,6 @@ class TableTennis:
                 mouse_pos = pygame.mouse.get_pos()
                 self._check_play_button(mouse_pos)
 
-
     def _check_keydown_events(self, event):
         """Respond to key or button presses."""
         if event.key == self.input_button.quit_key:
@@ -97,10 +94,11 @@ class TableTennis:
 
     def _check_keyup_events(self, event):
         """Respond to key or button releases."""
-        if event.key == self.input_button.player_up:
-            self.player.moving_up = False
-        elif event.key == self.input_button.player_down:
-            self.player.moving_down = False
+        if self.game_active:
+            if event.key == self.input_button.player_up:
+                self.player.moving_up = False
+            elif event.key == self.input_button.player_down:
+                self.player.moving_down = False
 
     def _check_play_button(self, mouse_pos):
         """
@@ -110,10 +108,10 @@ class TableTennis:
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.game_active:
             self.game_active = True
-            pygame.mouse.set_visible(False)
 
     def _update_screen(self):
         """Refresh objects on screen and flip to the new screen."""
+        self.clock.tick(self.setup.FPS)
         self.screen.fill(self.setup.bg_color)
         if self.game_active:
             for paddle in self.paddles.sprites():
@@ -121,7 +119,6 @@ class TableTennis:
         if not self.game_active:
             self.play_button.draw_button()
         pygame.display.flip()
-        self.clock.tick(self.setup.FPS)
 
 
 if __name__ == '__main__':
