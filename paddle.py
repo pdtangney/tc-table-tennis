@@ -34,6 +34,11 @@ class Paddle(Sprite):
 
     def update(self):
         """Update the paddle's position on screen."""
+        if self.setup.moving_up and self.rect.top > 0:
+            self.rect.y -= self.setup.player_speed
+        elif (self.setup.moving_down and
+                self.rect.bottom < self.screen_rect.bottom):
+            self.rect.y += self.setup.player_speed
 
     def draw_paddle(self):
         """Draw the paddle to the screen."""

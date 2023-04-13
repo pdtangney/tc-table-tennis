@@ -48,7 +48,7 @@ class TableTennis:
         self.tc_player = Paddle(self, 'L')
         self.paddles.add(self.player)
         self.paddles.add(self.tc_player)
-        self.play_button = Button(self, "PLAY")
+        self.play_button = Button(self, "PAUSE")
         self.draw_net()
 
     def _init_display(self):
@@ -69,6 +69,7 @@ class TableTennis:
             self.check_input_events()
             if self.game_active:
                 pygame.mouse.set_visible(False)
+                self.player.update()
             self._update_screen()
 
     def check_input_events(self):
@@ -96,17 +97,16 @@ class TableTennis:
                 self.game_active = True
         if self.game_active:
             if event.key == self.input_button.player_up:
-                self.player.moving_up = True
+                self.setup.moving_up = True
             elif event.key == self.input_button.player_down:
-                self.player.moving_down = True
+                self.setup.moving_down = True
 
     def _check_keyup_events(self, event):
         """Respond to key or button releases."""
-        if self.game_active:
-            if event.key == self.input_button.player_up:
-                self.player.moving_up = False
-            elif event.key == self.input_button.player_down:
-                self.player.moving_down = False
+        if event.key == self.input_button.player_up:
+            self.setup.moving_up = False
+        elif event.key == self.input_button.player_down:
+            self.setup.moving_down = False
 
     def _check_play_button(self, mouse_pos):
         """

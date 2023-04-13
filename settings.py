@@ -20,6 +20,7 @@
     Open the file LICENSE in a text editor for more information.
 """
 
+
 class Settings:
     """
     A class to manage in-game settings.
@@ -31,8 +32,8 @@ class Settings:
     def __init__(self):
         """Initialize the settings."""
 
-        self.screen_x = 640
-        self.screen_y = 480
+        self.screen_x = 1024
+        self.screen_y = 768
         self.resolution = (self.screen_x, self.screen_y)
         self.equipment_color = (255, 255, 255)
         # By default, paddle, net, pause/play button all share the
@@ -41,11 +42,15 @@ class Settings:
         self.bg_color = (20, 20, 20)
         self.FPS = 30
 
+        # Player settings
+        self.player_speed = 30
+        self.moving_up = False
+        self.moving_down = False
         # Paddle settings
         self.paddle_color = self.equipment_color
         # Set the paddle size to be x = 3%, y = 13% of screen resolution.
         paddle_x = self.screen_x * .03
-        paddle_y = self.screen_x * .13
+        paddle_y = self.screen_y * .13
         self.paddle_x = int(paddle_x)  # Thickness
         self.paddle_y = int(paddle_y)  # Height
         self.tc_paddle_speed = 1  # I refer to ai players as tc players
