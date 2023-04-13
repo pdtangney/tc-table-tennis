@@ -48,12 +48,19 @@ class TableTennis:
         self.paddles.add(self.player)
         self.paddles.add(self.tc_player)
         self.play_button = Button(self, "PLAY")
+        self.draw_net()
 
     def _init_display(self):
         """Setup the display and window title."""
         self.screen = pygame.display.set_mode(self.setup.resolution)
         self.screen_rect = self.screen.get_rect()
         pygame.display.set_caption("Tc [ Table | Tennis ] ")
+
+    def draw_net(self):
+        """Draw the net to the center of the screen."""
+        self.net_rect = pygame.Rect(0, 0, self.setup.net_thickness,
+                                    self.setup.screen_y)
+        self.net_rect.center = self.screen_rect.center
 
     def run_game(self):
         """Start the main game loop."""
@@ -113,6 +120,7 @@ class TableTennis:
         """Refresh objects on screen and flip to the new screen."""
         self.clock.tick(self.setup.FPS)
         self.screen.fill(self.setup.bg_color)
+        pygame.draw.rect(self.screen, self.setup.net_color, self.net_rect)
         if self.game_active:
             for paddle in self.paddles.sprites():
                 paddle.draw_paddle()
