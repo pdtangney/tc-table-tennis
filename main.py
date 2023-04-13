@@ -1,7 +1,7 @@
 """
 Main game module. Most of the magic lies here. :)
 
-    Tc Table Tennis - A clone of Pong.
+    Tc Table Tennis - A top-down view electronic table tennis game.
     Copyright (C) 2023 Peter Tangney (peteATrockytcgames.com)
 
     This program is free software: you can redistribute it and/or modify
@@ -17,6 +17,7 @@ Main game module. Most of the magic lies here. :)
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+    Open the file LICENSE in a text editor for more information.
 """
 
 import sys
