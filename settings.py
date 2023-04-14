@@ -37,7 +37,7 @@ class Settings:
         self.resolution = (self.screen_x, self.screen_y)
         self.equipment_color = (255, 255, 255)
         # By default, paddle, net, pause/play button all share the
-        # same color. Color of the ball is slightly darker (see below)
+        # same color. Color of the ball is DIFFERENT (see below)
         # In order to visually distinguish it from the net and paddles.
         self.bg_color = (20, 20, 20)
         self.FPS = 30
@@ -66,12 +66,14 @@ class Settings:
         self.bttn_txt_color = self.equipment_color
 
         # Ball settings
-        self.ball_color = (240, 240, 240)
-        self.ball_radius = 10
-        self.ball_speed = 1.5
+        self.ball_color = (100, 255, 100)
+        # The radius allows the ball to fit within the width of the net
+        self.ball_radius = self.screen_x * .04
+        self.ball_speed = 7.5
 
         # Points settings
-        self.miss = 2
+        self.points = 0  # initialize
+        self.score = 1
         self.win_level = 5
 
         # Life settings

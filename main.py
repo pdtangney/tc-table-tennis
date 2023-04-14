@@ -28,6 +28,7 @@ from settings import Settings
 from input_controls import KeyboardInput
 from paddle import Paddle
 from button import Button
+from ball import Ball
 
 
 class TableTennis:
@@ -49,6 +50,7 @@ class TableTennis:
         self.paddles.add(self.player)
         self.paddles.add(self.tc_player)
         self.play_button = Button(self, "PAUSE")
+        self.ball = Ball(self)
         self.draw_net()
 
     def _init_display(self):
@@ -70,6 +72,8 @@ class TableTennis:
             if self.game_active:
                 pygame.mouse.set_visible(False)
                 self.player.update()
+                self.ball.update()
+            print(self.setup.points)
             self._update_screen()
 
     def check_input_events(self):
@@ -125,6 +129,7 @@ class TableTennis:
         if self.game_active:
             for paddle in self.paddles.sprites():
                 paddle.draw_paddle()
+            self.ball.draw_ball()
         if not self.game_active:
             self.play_button.draw_button()
         pygame.display.flip()
