@@ -45,9 +45,9 @@ class TableTennis:
         #gamestats()
         #scoreboard()
         self.paddles = pygame.sprite.Group()
-        self.player = Paddle(self, 'R')
+        self.player_right = Paddle(self, 'R')
         self.tc_player = Paddle(self, 'L')
-        self.paddles.add(self.player)
+        self.paddles.add(self.player_right)
         self.paddles.add(self.tc_player)
         self.play_button = Button(self, "PAUSE")
         self.ball = Ball(self)
@@ -72,7 +72,7 @@ class TableTennis:
             self.check_input_events()
             if self.game_active:
                 pygame.mouse.set_visible(False)
-                self.player.update()
+                self.player_right.update()
                 self.ball.update()
             self._update_screen()
 
@@ -100,16 +100,16 @@ class TableTennis:
             elif not self.game_active:
                 self.game_active = True
         if self.game_active:
-            if event.key == self.input_button.player_up:
+            if event.key == self.input_button.player_right_up:
                 self.setup.moving_up = True
-            elif event.key == self.input_button.player_down:
+            elif event.key == self.input_button.player_right_down:
                 self.setup.moving_down = True
 
     def _check_keyup_events(self, event):
         """Respond to key or button releases."""
-        if event.key == self.input_button.player_up:
+        if event.key == self.input_button.player_right_up:
             self.setup.moving_up = False
-        elif event.key == self.input_button.player_down:
+        elif event.key == self.input_button.player_right_down:
             self.setup.moving_down = False
 
     def _check_play_button(self, mouse_pos):

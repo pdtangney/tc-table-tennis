@@ -40,7 +40,7 @@ class Settings:
         self.equipment_color = (255, 255, 255)
         self.bg_color = (20, 20, 20)
         self.FPS = 30
-        # How long to pause the game after missing the ball
+        # How long to pause the game after missing the ball/scoring
         self.sleep_timer = 1.0
 
         # Player settings
@@ -62,7 +62,7 @@ class Settings:
         self.net_thickness = int(thickness)
         self.net_color = self.equipment_color
 
-        # Button settings
+        # Pause button settings
         self.button_color = self.bg_color
         self.bttn_txt_color = self.equipment_color
 
