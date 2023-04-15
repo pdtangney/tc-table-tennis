@@ -72,8 +72,9 @@ class Settings:
         ball_speed = 7.5
         self.ball_speed = int(ball_speed)
         # Points settings
-        self.points = 0  # initialize
-        self.score = 1
+        self.score_left = 0
+        self.score_right = 0
+        self.points = 1
         self.win_level = 5
 
         # Life settings

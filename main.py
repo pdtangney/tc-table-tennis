@@ -67,13 +67,13 @@ class TableTennis:
 
     def run_game(self):
         """Start the main game loop."""
+        self.ball.drop()
         while True:
             self.check_input_events()
             if self.game_active:
                 pygame.mouse.set_visible(False)
                 self.player.update()
                 self.ball.update()
-            print(self.setup.points)
             self._update_screen()
 
     def check_input_events(self):
