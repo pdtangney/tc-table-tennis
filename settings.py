@@ -26,19 +26,18 @@ class Settings:
     A class to manage in-game settings.
     Settings are:
         Screen resolution, background color, paddle colors,
-        ball color. Game speed and frame-rate.
+        ball color. Game speed and frame-rate (FPS).
     """
 
     def __init__(self):
         """Initialize the settings."""
-
         self.screen_x = 1024
         self.screen_y = 768
         self.resolution = (self.screen_x, self.screen_y)
-        self.equipment_color = (255, 255, 255)
         # By default, paddle, net, pause/play button all share the
         # same color. Color of the ball is DIFFERENT (see below)
         # In order to visually distinguish it from the net and paddles.
+        self.equipment_color = (255, 255, 255)
         self.bg_color = (20, 20, 20)
         self.FPS = 30
 
@@ -48,7 +47,7 @@ class Settings:
         self.moving_down = False
         # Paddle settings
         self.paddle_color = self.equipment_color
-        # Set the paddle size to be x = 3%, y = 13% of screen resolution.
+        # Set the paddle size to be x = 3%, y = 13% of screen resolution
         paddle_x = self.screen_x * .03
         paddle_y = self.screen_y * .13
         self.paddle_x = int(paddle_x)  # Thickness
@@ -68,9 +67,10 @@ class Settings:
         # Ball settings
         self.ball_color = (100, 255, 100)
         # The radius allows the ball to fit within the width of the net
-        self.ball_radius = self.screen_x * .04
-        self.ball_speed = 7.5
-
+        ball_radius = self.screen_x * .04
+        self.ball_radius = int(ball_radius)
+        ball_speed = 7.5
+        self.ball_speed = int(ball_speed)
         # Points settings
         self.points = 0  # initialize
         self.score = 1

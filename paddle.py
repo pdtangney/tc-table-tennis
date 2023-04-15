@@ -21,16 +21,13 @@ class Paddle(Sprite):
         self.setup = game_instance.setup
         self.color = self.setup.paddle_color
         self.rect = pygame.Rect(0, 0, self.setup.paddle_x, self.setup.paddle_y)
-        # width, height
         if location == 'R':
             self.rect.right = self.screen_rect.right - 20
         if location == 'L':
             self.rect.left = self.screen_rect.left + 20
-
         self.rect.centery = self.screen_rect.centery
+        # Needed when the pace of the game speeds up in later levels:
         self.y = float(self.rect.y)
-        # The above line will be needed when the pace of thegame speeds
-        # up in later levels.
 
     def update(self):
         """Update the paddle's position on screen."""
@@ -42,4 +39,4 @@ class Paddle(Sprite):
 
     def draw_paddle(self):
         """Draw the paddle to the screen."""
-        pygame.draw.rect(self.screen, self.color, self. rect)
+        pygame.draw.rect(self.screen, self.color, self.rect)

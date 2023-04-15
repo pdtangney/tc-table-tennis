@@ -1,8 +1,4 @@
-"""
-Module containing classes to manage keyboard, mouse, joy-pad input.
-
-This module requires Pygame 2.3.0+
-"""
+"""Module containing classes to manage keyboard, mouse, joy-pad input."""
 
 import pygame
 
