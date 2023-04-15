@@ -1,6 +1,7 @@
 """Module to manage the creation of the ball."""
 
 import random
+import time
 
 import pygame
 from pygame.sprite import Sprite
@@ -19,15 +20,16 @@ class Ball(Sprite):
         self.screen_rect = game_instance.screen.get_rect()
         self.setup = game_instance.setup
         self.color = self.setup.ball_color
+        self.sleep = self.setup.sleep_timer
         self.rect = pygame.Rect(0, 0, self.setup.ball_radius,
                                 self.setup.ball_radius)
-        self.rect.center = self.screen_rect.center
         # Needed when the pace of the game speeds up in later levels:
         self.y = float(self.rect.y)
         self.x = float(self.rect.x)
 
     def drop(self):
         """Set the starting direction of the ball."""
+        time.sleep(self.sleep)
         self.rect.center = self.screen_rect.center
         self.direction = random.randint(1, 2)
 
@@ -37,13 +39,13 @@ class Ball(Sprite):
             self.rect.x += self.setup.ball_speed
         else:
             self.rect.x -= self.setup.ball_speed
-        if self.rect.right >= self.screen_rect.right:
+        if self.rect.left > self.screen_rect.right:
             self.setup.score_left += self.setup.points
             self.drop()
-        if self.rect.left <= 0:
+        if self.rect.right < 0:
             self.setup.score_right += self.setup.points
             self.drop()
 
     def draw_ball(self):
         """Draw the ball to the screen."""
-        pygame.draw.rect(self.screen, self.color, self. rect)
+        pygame.draw.rect(self.screen, self.color, self.rect)

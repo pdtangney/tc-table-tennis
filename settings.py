@@ -40,6 +40,8 @@ class Settings:
         self.equipment_color = (255, 255, 255)
         self.bg_color = (20, 20, 20)
         self.FPS = 30
+        # How long to pause the game after missing the ball
+        self.sleep_timer = 1.0
 
         # Player settings
         self.player_speed = 30
@@ -69,7 +71,7 @@ class Settings:
         # The radius allows the ball to fit within the width of the net
         ball_radius = self.screen_x * .04
         self.ball_radius = int(ball_radius)
-        ball_speed = 7.5
+        ball_speed = 9.5
         self.ball_speed = int(ball_speed)
         # Points settings
         self.score_left = 0
