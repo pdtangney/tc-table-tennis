@@ -1,5 +1,6 @@
 """Module to manage the creation of the paddles."""
 
+import sys
 
 import pygame
 from pygame.sprite import Sprite
@@ -21,9 +22,13 @@ class Paddle(Sprite):
         self.setup = game_instance.setup
         self.color = self.setup.paddle_color
         self.rect = pygame.Rect(0, 0, self.setup.paddle_x, self.setup.paddle_y)
+        if  location != 'R' and location  != 'L':
+            print(f'\nError! Invalid paddle location {location}')
+            print('See __init__(self) in main.py.')
+            sys.exit()
         if location == 'R':
             self.rect.right = self.screen_rect.right - 20
-        if location == 'L':
+        elif location == 'L':
             self.rect.left = self.screen_rect.left + 20
         self.rect.centery = self.screen_rect.centery
         # Needed when the pace of the game speeds up in later levels:
