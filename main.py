@@ -44,13 +44,13 @@ class TableTennis:
         self.running = False
         #gamestats()
         #scoreboard()
+        self.ball = Ball(self)
         self.paddles = pygame.sprite.Group()
         self.player_right = Paddle(self, 'R')
         self.player_left = Paddle(self, 'L')
         self.paddles.add(self.player_right)
         self.paddles.add(self.player_left)
         self.pause_bttn = Button(self, "PAUSE")
-        self.ball = Ball(self)
         self.draw_net()
         pygame.event.set_allowed([pygame.QUIT, pygame.KEYDOWN,
                                   pygame.KEYUP, pygame.MOUSEBUTTONDOWN])
@@ -79,6 +79,7 @@ class TableTennis:
                 pygame.mouse.set_visible(False)
                 self.player_right.update()
                 self.ball.update()
+                self.player_left.tc_update(self.ball.rect.y)
                 self.check_collisions()
             self._update_screen()
 

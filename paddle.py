@@ -19,6 +19,7 @@ class Paddle(Sprite):
         super().__init__()
         self.screen = game_instance.screen
         self.screen_rect = game_instance.screen.get_rect()
+        self.ball = game_instance.ball
         self.setup = game_instance.setup
         self.color = self.setup.paddle_color
         self.rect = pygame.Rect(0, 0, self.setup.paddle_x, self.setup.paddle_y)
@@ -41,6 +42,9 @@ class Paddle(Sprite):
         elif (self.setup.moving_down and
                 self.rect.bottom < self.screen_rect.bottom):
             self.rect.y += self.setup.player_speed
+
+    def tc_update(self, y):
+        self.rect.y = y
 
     def draw(self):
         """Draw the paddle to the screen."""
