@@ -54,7 +54,6 @@ class Settings:
         paddle_y = self.screen_y * .13
         self.paddle_x = int(paddle_x)  # Thickness
         self.paddle_y = int(paddle_y)  # Height
-        self.tc_paddle_speed = 1  # I refer to ai players as tc players
 
         # Center net settings
         # Net thickness is 4% of screen width.
@@ -71,7 +70,7 @@ class Settings:
         # The radius allows the ball to fit within the width of the net
         ball_radius = self.screen_x * .04
         self.ball_radius = int(ball_radius)
-        ball_speed = 15
+        ball_speed = 20
         self.ball_speed = int(ball_speed)
         # Points settings
         self.score_left = 0

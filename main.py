@@ -40,6 +40,7 @@ class TableTennis:
         self.setup = Settings()
         self._init_display()
         self.clock = pygame.time.Clock()
+        self.timer = 0
         self.input = KeyboardInput()
         self.running = False
         #gamestats()
@@ -79,7 +80,10 @@ class TableTennis:
                 pygame.mouse.set_visible(False)
                 self.player_right.update()
                 self.ball.update()
-                self.player_left.tc_update(self.ball.rect.y)
+                self.timer += 1
+                if self.timer == 10:
+                    self.player_left.tc_update(self.ball.rect.y)
+                    self.timer = 0
                 self.check_collisions()
             self._update_screen()
 
