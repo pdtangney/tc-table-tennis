@@ -46,9 +46,9 @@ class TableTennis:
         #scoreboard()
         self.paddles = pygame.sprite.Group()
         self.player_right = Paddle(self, 'R')
-        self.tc_player = Paddle(self, 'L')
+        self.player_left = Paddle(self, 'L')
         self.paddles.add(self.player_right)
-        self.paddles.add(self.tc_player)
+        self.paddles.add(self.player_left)
         self.pause_bttn = Button(self, "PAUSE")
         self.ball = Ball(self)
         self.draw_net()
@@ -72,6 +72,7 @@ class TableTennis:
             self.check_input_events()
             if self.running:
                 pygame.mouse.set_visible(False)
+                self.check_collisions()
                 self.player_right.update()
                 self.ball.update()
             self._update_screen()
@@ -104,6 +105,16 @@ class TableTennis:
                 self.setup.moving_up = True
             elif event.key == self.input.player_right_down:
                 self.setup.moving_down = True
+
+    def check_collisions(self):
+        """Check for ball, paddle collisions."""
+        for paddle in self.paddles:
+            if self.ball.rect.colliderect(paddle):
+                print('HIT!')
+                if self.ball.x_direction == 1:
+                    self.ball.x_direction = 2
+                elif self.ball.x_direction == 2:
+                    self.ball.x_direction = 1
 
     def _check_keyup_events(self, event):
         """Respond to key or button releases."""

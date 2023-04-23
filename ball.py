@@ -23,23 +23,24 @@ class Ball(Sprite):
         self.sleep = self.setup.sleep_timer
         self.rect = pygame.Rect(0, 0, self.setup.ball_radius,
                                 self.setup.ball_radius)
+        self.x_direction = None
+        self.speed = self.setup.ball_speed
         # Needed when the pace of the game speeds up in later levels:
         self.y = float(self.rect.y)
         self.x = float(self.rect.x)
-        self.direction = None
 
     def drop(self):
-        """Set the starting direction of the ball."""
+        """Set the starting x_direction of the ball."""
         time.sleep(self.sleep)
         self.rect.center = self.screen_rect.center
-        self.direction = random.randint(1, 2)
+        self.x_direction = random.randint(1, 2)
 
     def update(self):
         """Update the ball's position on screen."""
-        if self.direction == 1:
-            self.rect.x += self.setup.ball_speed
+        if self.x_direction == 1:
+            self.rect.x += self.speed
         else:
-            self.rect.x -= self.setup.ball_speed
+            self.rect.x -= self.speed
         if self.rect.left > self.screen_rect.right:
             self.setup.score_left += self.setup.points
             self.drop()
