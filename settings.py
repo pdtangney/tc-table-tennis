@@ -71,7 +71,7 @@ class Settings:
         # The radius allows the ball to fit within the width of the net
         ball_radius = self.screen_x * .04
         self.ball_radius = int(ball_radius)
-        ball_speed = 9.5
+        ball_speed = 15
         self.ball_speed = int(ball_speed)
         # Points settings
         self.score_left = 0

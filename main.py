@@ -110,7 +110,6 @@ class TableTennis:
         """Check for ball, paddle collisions."""
         for paddle in self.paddles:
             if self.ball.rect.colliderect(paddle):
-                print('HIT!')
                 if self.ball.x_direction == 1:
                     self.ball.x_direction = 2
                 elif self.ball.x_direction == 2:

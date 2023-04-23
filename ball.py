@@ -39,6 +39,7 @@ class Ball(Sprite):
         """Update the ball's position on screen."""
         if self.x_direction == 1:
             self.rect.x += self.speed
+            self.rect.y += self.speed / 2
         else:
             self.rect.x -= self.speed
         if self.rect.left > self.screen_rect.right:
@@ -47,7 +48,10 @@ class Ball(Sprite):
         if self.rect.right < 0:
             self.setup.score_right += self.setup.points
             self.drop()
-
+        if self.rect.bottom >= self.screen_rect.bottom:
+            self.speed = -self.speed
+        if self.rect.top < 0:
+            self.speed  = -self.speed
     def draw(self):
         """Draw the ball to the screen."""
         pygame.draw.rect(self.screen, self.color, self.rect)
