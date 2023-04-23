@@ -52,6 +52,7 @@ class Ball(Sprite):
             self.speed = -self.speed
         if self.rect.top < 0:
             self.speed  = -self.speed
+
     def draw(self):
         """Draw the ball to the screen."""
         pygame.draw.rect(self.screen, self.color, self.rect)

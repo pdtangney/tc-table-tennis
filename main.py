@@ -52,18 +52,23 @@ class TableTennis:
         self.pause_bttn = Button(self, "PAUSE")
         self.ball = Ball(self)
         self.draw_net()
+        pygame.event.set_allowed([pygame.QUIT, pygame.KEYDOWN,
+                                  pygame.KEYUP, pygame.MOUSEBUTTONDOWN])
 
     def _init_display(self):
         """Setup the display and window title."""
         self.screen = pygame.display.set_mode(self.setup.resolution)
         self.screen_rect = self.screen.get_rect()
         pygame.display.set_caption("Tc [ Table | Tennis ] ")
+        self.bg_surface = pygame.Surface(self.setup.resolution)
+        self.bg_surface.fill(self.setup.bg_color)
 
     def draw_net(self):
         """Draw the net to the center of the screen."""
         self.net_rect = pygame.Rect(0, 0, self.setup.net_thickness,
                                     self.setup.screen_y)
         self.net_rect.center = self.screen_rect.center
+        pygame.draw.rect(self.bg_surface, self.setup.net_color, self.net_rect)
 
     def run(self):
         """Start the main game loop."""
@@ -72,9 +77,9 @@ class TableTennis:
             self.check_input_events()
             if self.running:
                 pygame.mouse.set_visible(False)
-                self.check_collisions()
                 self.player_right.update()
                 self.ball.update()
+                self.check_collisions()
             self._update_screen()
 
     def check_input_events(self):
@@ -133,9 +138,8 @@ class TableTennis:
 
     def _update_screen(self):
         """Refresh objects on screen and flip to the new screen."""
-        self.clock.tick(self.setup.FPS)
-        self.screen.fill(self.setup.bg_color)
-        pygame.draw.rect(self.screen, self.setup.net_color, self.net_rect)
+        self.clock.tick_busy_loop(self.setup.FPS)
+        self.screen.blit(self.bg_surface, (0, 0))
         if self.running:
             for paddle in self.paddles.sprites():
                 paddle.draw()
