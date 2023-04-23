@@ -26,6 +26,7 @@ class Ball(Sprite):
         # Needed when the pace of the game speeds up in later levels:
         self.y = float(self.rect.y)
         self.x = float(self.rect.x)
+        self.direction = None
 
     def drop(self):
         """Set the starting direction of the ball."""

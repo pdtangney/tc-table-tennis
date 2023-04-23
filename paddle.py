@@ -22,7 +22,7 @@ class Paddle(Sprite):
         self.setup = game_instance.setup
         self.color = self.setup.paddle_color
         self.rect = pygame.Rect(0, 0, self.setup.paddle_x, self.setup.paddle_y)
-        if location != 'R' and location != 'L':
+        if location not in('R', 'L'):
             print(f'\nError! Invalid paddle location {location}')
             print('See __init__(self) in main.py.')
             sys.exit()
