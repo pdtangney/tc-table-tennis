@@ -46,6 +46,6 @@ class Ball(Sprite):
             self.setup.score_right += self.setup.points
             self.drop()
 
-    def draw_ball(self):
+    def draw(self):
         """Draw the ball to the screen."""
         pygame.draw.rect(self.screen, self.color, self.rect)

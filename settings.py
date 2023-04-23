@@ -41,7 +41,7 @@ class Settings:
         self.bg_color = (20, 20, 20)
         self.FPS = 30
         # How long to pause the game after missing the ball/scoring
-        self.sleep_timer = 1.0
+        self.sleep_timer = 0.5
 
         # Player settings
         self.player_speed = 30

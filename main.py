@@ -40,8 +40,8 @@ class TableTennis:
         self.setup = Settings()
         self._init_display()
         self.clock = pygame.time.Clock()
-        self.input_button = KeyboardInput()
-        self.game_active = False
+        self.input = KeyboardInput()
+        self.running = False
         #gamestats()
         #scoreboard()
         self.paddles = pygame.sprite.Group()
@@ -49,7 +49,7 @@ class TableTennis:
         self.tc_player = Paddle(self, 'L')
         self.paddles.add(self.player_right)
         self.paddles.add(self.tc_player)
-        self.play_button = Button(self, "PAUSE")
+        self.pause_bttn = Button(self, "PAUSE")
         self.ball = Ball(self)
         self.draw_net()
 
@@ -65,12 +65,12 @@ class TableTennis:
                                     self.setup.screen_y)
         self.net_rect.center = self.screen_rect.center
 
-    def run_game(self):
+    def run(self):
         """Start the main game loop."""
         self.ball.drop()
         while True:
             self.check_input_events()
-            if self.game_active:
+            if self.running:
                 pygame.mouse.set_visible(False)
                 self.player_right.update()
                 self.ball.update()
@@ -87,54 +87,54 @@ class TableTennis:
                 self._check_keyup_events(event)
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
-                self._check_play_button(mouse_pos)
+                self._check_pause_bttn(mouse_pos)
 
     def _check_keydown_events(self, event):
         """Respond to key or button presses."""
-        if event.key == self.input_button.quit_key:
+        if event.key == self.input.quit:
             sys.exit()
-        elif event.key == self.input_button.pause:
-            if self.game_active:
-                self.game_active = False
+        elif event.key == self.input.pause:
+            if self.running:
+                self.running = False
                 pygame.mouse.set_visible(True)
-            elif not self.game_active:
-                self.game_active = True
-        if self.game_active:
-            if event.key == self.input_button.player_right_up:
+            elif not self.running:
+                self.running = True
+        if self.running:
+            if event.key == self.input.player_right_up:
                 self.setup.moving_up = True
-            elif event.key == self.input_button.player_right_down:
+            elif event.key == self.input.player_right_down:
                 self.setup.moving_down = True
 
     def _check_keyup_events(self, event):
         """Respond to key or button releases."""
-        if event.key == self.input_button.player_right_up:
+        if event.key == self.input.player_right_up:
             self.setup.moving_up = False
-        elif event.key == self.input_button.player_right_down:
+        elif event.key == self.input.player_right_down:
             self.setup.moving_down = False
 
-    def _check_play_button(self, mouse_pos):
+    def _check_pause_bttn(self, mouse_pos):
         """
         Start a new game or resume a paused game when Pleayer
         clicks button.
         """
-        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
-        if button_clicked and not self.game_active:
-            self.game_active = True
+        button_clicked = self.pause_bttn.rect.collidepoint(mouse_pos)
+        if button_clicked and not self.running:
+            self.running = True
 
     def _update_screen(self):
         """Refresh objects on screen and flip to the new screen."""
         self.clock.tick(self.setup.FPS)
         self.screen.fill(self.setup.bg_color)
         pygame.draw.rect(self.screen, self.setup.net_color, self.net_rect)
-        if self.game_active:
+        if self.running:
             for paddle in self.paddles.sprites():
-                paddle.draw_paddle()
-            self.ball.draw_ball()
-        if not self.game_active:
-            self.play_button.draw_button()
+                paddle.draw()
+            self.ball.draw()
+        if not self.running:
+            self.pause_bttn.draw()
         pygame.display.flip()
 
 
 if __name__ == '__main__':
     tc_tt = TableTennis()
-    tc_tt.run_game()
+    tc_tt.run()

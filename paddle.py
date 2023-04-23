@@ -22,7 +22,7 @@ class Paddle(Sprite):
         self.setup = game_instance.setup
         self.color = self.setup.paddle_color
         self.rect = pygame.Rect(0, 0, self.setup.paddle_x, self.setup.paddle_y)
-        if  location != 'R' and location  != 'L':
+        if location != 'R' and location != 'L':
             print(f'\nError! Invalid paddle location {location}')
             print('See __init__(self) in main.py.')
             sys.exit()
@@ -42,6 +42,6 @@ class Paddle(Sprite):
                 self.rect.bottom < self.screen_rect.bottom):
             self.rect.y += self.setup.player_speed
 
-    def draw_paddle(self):
+    def draw(self):
         """Draw the paddle to the screen."""
         pygame.draw.rect(self.screen, self.color, self.rect)
