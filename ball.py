@@ -23,6 +23,8 @@ class Ball(Sprite):
         self.sleep = self.setup.sleep_timer
         self.rect = pygame.Rect(0, 0, self.setup.ball_radius,
                                 self.setup.ball_radius)
+        self.surface = pygame.Surface((self.rect.width, self.rect.height))
+        pygame.draw.rect(self.surface, self.color, self.rect)
         self.x_direction = None
         self.speed = self.setup.ball_speed
         # Needed when the pace of the game speeds up in later levels:
@@ -39,7 +41,7 @@ class Ball(Sprite):
         """Update the ball's position on screen."""
         if self.x_direction == 1:
             self.rect.x += self.speed
-            self.rect.y += self.speed / 2
+            self.rect.y += self.speed
         else:
             self.rect.x -= self.speed
         if self.rect.left > self.screen_rect.right:
@@ -55,4 +57,4 @@ class Ball(Sprite):
 
     def draw(self):
         """Draw the ball to the screen."""
-        pygame.draw.rect(self.screen, self.color, self.rect)
+        self.screen.blit(self.surface,(self.rect.x, self.rect.y))
