@@ -55,7 +55,7 @@ class TableTennis:
         self.pause_bttn = Button(self, "PAUSE")
         self.draw_net()
         pygame.event.set_allowed([pygame.QUIT, pygame.KEYDOWN,
-                                  pygame.KEYUP, pygame.MOUSEBUTTONDOWN])
+                                  pygame.KEYUP])
 
     def _init_display(self):
         """Setup the display and window title."""
@@ -99,9 +99,6 @@ class TableTennis:
                 self._check_keydown_events(event)
             if event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_pos = pygame.mouse.get_pos()
-                self._check_pause_bttn(mouse_pos)
 
     def _check_keydown_events(self, event):
         """Respond to key or button presses."""
@@ -119,6 +116,13 @@ class TableTennis:
             elif event.key == self.input.player_right_down:
                 self.setup.moving_down = True
 
+    def _check_keyup_events(self, event):
+        """Respond to key or button releases."""
+        if event.key == self.input.player_right_up:
+            self.setup.moving_up = False
+        elif event.key == self.input.player_right_down:
+            self.setup.moving_down = False
+
     def check_collisions(self):
         """Check for ball, paddle collisions."""
         for paddle in self.paddles:
@@ -127,22 +131,6 @@ class TableTennis:
                     self.ball.x_direction = 2
                 else:
                     self.ball.x_direction = 1
-
-    def _check_keyup_events(self, event):
-        """Respond to key or button releases."""
-        if event.key == self.input.player_right_up:
-            self.setup.moving_up = False
-        elif event.key == self.input.player_right_down:
-            self.setup.moving_down = False
-
-    def _check_pause_bttn(self, mouse_pos):
-        """
-        Start a new game or resume a paused game when Pleayer
-        clicks button.
-        """
-        button_clicked = self.pause_bttn.rect.collidepoint(mouse_pos)
-        if button_clicked and not self.game_active:
-            self.game_active = True
 
     def _update_screen(self):
         """Refresh objects on screen and flip to the new screen."""
