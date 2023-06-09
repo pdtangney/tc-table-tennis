@@ -83,10 +83,10 @@ class TableTennis:
                 self.ball.update()
                 self.timer += 1
                 if self.timer == 10:
-                    self.player_left.tc_update(self.ball.rect.y)
+                    self.player_left.tc_update(self.ball.rect.centery)
                     self.timer = 0
                 else:
-                    self.player_left.tc_update(self.ball.rect.y)
+                    self.player_left.tc_update(self.ball.rect.centery)
                 self.check_collisions()
             self._update_screen()
 

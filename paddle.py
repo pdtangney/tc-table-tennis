@@ -12,7 +12,7 @@ class Paddle(Sprite):
     Arguments:
             game_instance - the instance of class TableTennis
             location - Which side of the screen to put the paddle.
-                       Options: ['L', 'R']
+                       Options: 'L', 'R'
     """
 
     def __init__(self, game_instance, location):
@@ -25,26 +25,27 @@ class Paddle(Sprite):
         self.rect = pygame.Rect(0, 0, self.setup.paddle_x, self.setup.paddle_y)
         if location not in ('R', 'L'):
             print(f'\nError! Invalid paddle location {location}')
-            print('See __init__(self) in main.py.')
+            print('Error in __init__(self) in main.py.')
             sys.exit()
         if location == 'R':
-            self.rect.right = self.screen_rect.right - 20
+            self.rect.right = self.screen_rect.right - self.rect.width
         elif location == 'L':
-            self.rect.left = self.screen_rect.left + 20
+            self.rect.left = self.screen_rect.left + self.rect.width
         self.rect.centery = self.screen_rect.centery
         # Needed when the pace of the game speeds up in later levels:
         self.y = float(self.rect.y)
 
     def update(self):
         """Update the paddle's position on screen."""
-        if self.setup.moving_up and self.rect.top > 0:
-            self.rect.y -= self.setup.player_speed
+        if self.setup.moving_up and self.rect.top > 5:
+            self.rect.y -= self.setup.paddle_speed
         elif (self.setup.moving_down and
-                self.rect.bottom < self.screen_rect.bottom):
-            self.rect.y += self.setup.player_speed
+                self.rect.bottom < (self.screen_rect.bottom - 5)):
+            self.rect.y += self.setup.paddle_speed
 
     def tc_update(self, y):
-        self.rect.y = y
+        """Update tc(AI) player's location."""
+        self.rect.centery = y
 
     def draw(self):
         """Draw the paddle to the screen."""
