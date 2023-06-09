@@ -21,6 +21,7 @@ class Ball(Sprite):
         self.setup = game_instance.setup
         self.color = self.setup.ball_color
         self.sleep = self.setup.sleep_timer
+        # ball_radius, in future version ball may be round
         self.rect = pygame.Rect(0, 0, self.setup.ball_radius,
                                 self.setup.ball_radius)
         self.surface = pygame.Surface((self.rect.width, self.rect.height))
@@ -41,18 +42,16 @@ class Ball(Sprite):
         """Update the ball's position on screen."""
         if self.x_direction == 1:
             self.rect.x += self.speed
-            self.rect.y += self.speed
         else:
             self.rect.x -= self.speed
         if self.rect.left > self.screen_rect.right:
             self.setup.score_left += self.setup.points
             self.drop()
-        if self.rect.right < 0:
+        if self.rect.right <= 0:
             self.setup.score_right += self.setup.points
             self.drop()
-        if self.rect.bottom >= self.screen_rect.bottom:
-            self.speed = -self.speed
-        if self.rect.top < 0:
+        if (self.rect.bottom >= self.screen_rect.bottom or
+                self.rect.top <= 0):
             self.speed = -self.speed
 
     def draw(self):
