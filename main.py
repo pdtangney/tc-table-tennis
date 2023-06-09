@@ -23,6 +23,7 @@ Main game module. Most of the magic lies here. :)
 import sys
 
 import pygame
+import random
 
 from settings import Settings
 from input_controls import KeyboardInput
@@ -42,7 +43,7 @@ class TableTennis:
         self.clock = pygame.time.Clock()
         self.timer = 0
         self.input = KeyboardInput()
-        self.running = False
+        self.game_active = False
         #gamestats()
         #scoreboard()
         self.ball = Ball(self)
@@ -76,7 +77,7 @@ class TableTennis:
         self.ball.drop()
         while True:
             self.check_input_events()
-            if self.running:
+            if self.game_active:
                 pygame.mouse.set_visible(False)
                 self.player_right.update()
                 self.ball.update()
@@ -84,6 +85,8 @@ class TableTennis:
                 if self.timer == 10:
                     self.player_left.tc_update(self.ball.rect.y)
                     self.timer = 0
+                else:
+                    self.player_left.tc_update(self.ball.rect.y)
                 self.check_collisions()
             self._update_screen()
 
@@ -105,12 +108,12 @@ class TableTennis:
         if event.key == self.input.quit:
             sys.exit()
         elif event.key == self.input.pause:
-            if self.running:
-                self.running = False
+            if self.game_active:
+                self.game_active = False
                 pygame.mouse.set_visible(True)
-            elif not self.running:
-                self.running = True
-        if self.running:
+            elif not self.game_active:
+                self.game_active = True
+        if self.game_active:
             if event.key == self.input.player_right_up:
                 self.setup.moving_up = True
             elif event.key == self.input.player_right_down:
@@ -122,7 +125,7 @@ class TableTennis:
             if self.ball.rect.colliderect(paddle):
                 if self.ball.x_direction == 1:
                     self.ball.x_direction = 2
-                elif self.ball.x_direction == 2:
+                else:
                     self.ball.x_direction = 1
 
     def _check_keyup_events(self, event):
@@ -138,20 +141,20 @@ class TableTennis:
         clicks button.
         """
         button_clicked = self.pause_bttn.rect.collidepoint(mouse_pos)
-        if button_clicked and not self.running:
-            self.running = True
+        if button_clicked and not self.game_active:
+            self.game_active = True
 
     def _update_screen(self):
         """Refresh objects on screen and flip to the new screen."""
-        self.clock.tick_busy_loop(self.setup.FPS)
         self.screen.blit(self.bg_surface, (0, 0))
-        if self.running:
+        if self.game_active:
             for paddle in self.paddles.sprites():
                 paddle.draw()
             self.ball.draw()
-        if not self.running:
+        if not self.game_active:
             self.pause_bttn.draw()
-        pygame.display.flip()
+        pygame.display.update()
+        self.clock.tick_busy_loop(self.setup.FPS)
 
 
 if __name__ == '__main__':

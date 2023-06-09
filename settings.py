@@ -44,7 +44,7 @@ class Settings:
         self.sleep_timer = 0.5
 
         # Player settings
-        self.player_speed = 30
+        self.paddle_speed = 30
         self.moving_up = False
         self.moving_down = False
         # Paddle settings
@@ -72,6 +72,7 @@ class Settings:
         self.ball_radius = int(ball_radius)
         ball_speed = 20
         self.ball_speed = int(ball_speed)
+
         # Points settings
         self.score_left = 0
         self.score_right = 0
