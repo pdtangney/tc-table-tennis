@@ -25,7 +25,7 @@ class Paddle(Sprite):
         self.rect = pygame.Rect(0, 0, self.setup.paddle_x, self.setup.paddle_y)
         if location not in ('R', 'L'):
             print(f'\nError! Invalid paddle location {location}')
-            print('Error in __init__(self) in main.py.')
+            print('Error most likely in __init__(self) in main.py.')
             sys.exit()
         if location == 'R':
             self.rect.right = self.screen_rect.right - self.rect.width
