@@ -1,32 +1,32 @@
-"""Module to manage configurable settings."""
+"""Module to manage configurable settings.
 
-"""
-    Tc Table Tennis - A top-down view electronic table tennis game.
-    Copyright (C) 2023 Peter Tangney (peteATrockytcgames.com)
+Tc Table Tennis - A top-down view electronic table tennis game.
+Copyright (C) 2023 Peter Tangney (peteATrockytcgames.com)
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-    Open the file LICENSE in a text editor for more information.
+Open the file LICENSE in a text editor for more information.
 """
 
 
 class Settings:
     """
     A class to manage in-game settings.
+
     Settings are:
         Screen resolution, background color, paddle colors,
-        ball color. Game speed and frame-rate (FPS).
+        ball color. Game speed and frame-rate (frame_rate).
     """
 
     def __init__(self):
@@ -39,7 +39,7 @@ class Settings:
         # In order to visually distinguish it from the net and paddles.
         self.equipment_color = (255, 255, 255)
         self.bg_color = (20, 20, 20)
-        self.FPS = 30
+        self.frame_rate = 30
         # How long to pause the game after missing the ball/scoring
         self.sleep_timer = 0.5
 

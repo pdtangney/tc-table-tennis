@@ -5,7 +5,9 @@ import pygame
 
 class KeyboardInput:
     """Keybindings for keyboard controls."""
+
     def __init__(self):
+        """Initialize keybindings."""
         self.quit = pygame.K_q
         self.player_right_up = pygame.K_UP
         self.player_right_down = pygame.K_DOWN

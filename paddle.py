@@ -16,6 +16,13 @@ class Paddle(Sprite):
     """
 
     def __init__(self, game_instance, location):
+        """Initialize a paddle instance.
+
+        game_instance = an instance of class TableTennis()
+        location is a single character 'L' or 'R' denoting the side of
+        the screen to place the paddle.
+        Calls super(). __init__() first.
+        """
         super().__init__()
         self.screen = game_instance.screen
         self.screen_rect = game_instance.screen.get_rect()
@@ -33,7 +40,7 @@ class Paddle(Sprite):
             self.rect.left = self.screen_rect.left + self.rect.width
         self.rect.centery = self.screen_rect.centery
         # Needed when the pace of the game speeds up in later levels:
-        self.y = float(self.rect.y)
+        self.y = float(self.rect.y)  # pylint: disable=invalid-name
 
     def update(self):
         """Update the paddle's position on screen."""
@@ -43,6 +50,7 @@ class Paddle(Sprite):
                 self.rect.bottom < (self.screen_rect.bottom - 5)):
             self.rect.y += self.setup.paddle_speed
 
+# pylint: disable=invalid-name
     def tc_update(self, y):
         """Update tc(AI) player's location."""
         self.rect.centery = y

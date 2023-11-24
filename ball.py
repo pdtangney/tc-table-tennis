@@ -15,6 +15,8 @@ class Ball(Sprite):
     """
 
     def __init__(self, game_instance):
+        """Initialize the game ball."""
+        # pylint: disable=invalid-name
         super().__init__()
         self.screen = game_instance.screen
         self.screen_rect = game_instance.screen.get_rect()
@@ -56,4 +58,4 @@ class Ball(Sprite):
 
     def draw(self):
         """Draw the ball to the screen."""
-        self.screen.blit(self.surface,(self.rect.x, self.rect.y))
+        self.screen.blit(self.surface, (self.rect.x, self.rect.y))

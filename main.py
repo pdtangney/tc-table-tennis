@@ -1,5 +1,5 @@
 """
-Main game module. Most of the magic lies here. :)
+Main game module. Most of the magic lies here.
 
     Tc Table Tennis - A top-down view electronic table tennis game.
     Copyright (C) 2023 Peter Tangney (peteATrockytcgames.com)
@@ -23,7 +23,6 @@ Main game module. Most of the magic lies here. :)
 import sys
 
 import pygame
-import random
 
 from settings import Settings
 from input_controls import KeyboardInput
@@ -44,8 +43,8 @@ class TableTennis:
         self.timer = 0
         self.input = KeyboardInput()
         self.game_active = False
-        #gamestats()
-        #scoreboard()
+        # gamestats()
+        # scoreboard()
         self.ball = Ball(self)
         self.paddles = pygame.sprite.Group()
         self.player_right = Paddle(self, 'R')
@@ -58,7 +57,7 @@ class TableTennis:
                                   pygame.KEYUP])
 
     def _init_display(self):
-        """Setup the display and window title."""
+        """Initialize the display and window title."""
         self.screen = pygame.display.set_mode(self.setup.resolution)
         self.screen_rect = self.screen.get_rect()
         pygame.display.set_caption("Tc [ Table | Tennis ] ")
@@ -137,7 +136,7 @@ class TableTennis:
         if not self.game_active:
             self.pause_bttn.draw()
         pygame.display.update()
-        self.clock.tick_busy_loop(self.setup.FPS)
+        self.clock.tick_busy_loop(self.setup.frame_rate)
 
 
 if __name__ == '__main__':
