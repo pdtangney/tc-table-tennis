@@ -31,9 +31,7 @@ class Settings:
 
     def __init__(self):
         """Initialize the settings."""
-        self.screen_x = 1024
-        self.screen_y = 768
-        self.resolution = (self.screen_x, self.screen_y)
+        self.resolution = (1024, 768)  # x, y = w, h
         # By default, paddle, net, pause/play button all share the
         # same color. Color of the ball is DIFFERENT (see below)
         # In order to visually distinguish it from the net and paddles.
@@ -50,14 +48,14 @@ class Settings:
         # Paddle settings
         self.paddle_color = self.equipment_color
         # Set the paddle size to be x = 3%, y = 13% of screen resolution
-        paddle_x = self.screen_x * .03
-        paddle_y = self.screen_y * .13
+        paddle_x = self.resolution[0] * .03
+        paddle_y = self.resolution[1] * .13
         self.paddle_x = int(paddle_x)  # Thickness
         self.paddle_y = int(paddle_y)  # Height
 
         # Center net settings
         # Net thickness is 4% of screen width.
-        thickness = self.screen_x * .04
+        thickness = self.resolution[0] * .04
         self.net_thickness = int(thickness)
         self.net_color = self.equipment_color
 
@@ -68,7 +66,7 @@ class Settings:
         # Ball settings
         self.ball_color = (100, 255, 100)
         # The radius allows the ball to fit within the width of the net
-        ball_radius = self.screen_x * .04
+        ball_radius = self.resolution[0] * .04
         self.ball_radius = int(ball_radius)
         ball_speed = 20
         self.ball_speed = int(ball_speed)

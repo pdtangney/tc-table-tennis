@@ -40,7 +40,6 @@ class TableTennis:
         self.setup = Settings()
         self._init_display()
         self.clock = pygame.time.Clock()
-        self.timer = 0
         self.input = KeyboardInput()
         self.game_active = False
         # gamestats()
@@ -67,7 +66,7 @@ class TableTennis:
     def draw_net(self):
         """Draw the net to the center of the screen."""
         self.net_rect = pygame.Rect(0, 0, self.setup.net_thickness,
-                                    self.setup.screen_y)
+                                    self.setup.resolution[1])
         self.net_rect.center = self.screen_rect.center
         pygame.draw.rect(self.bg_surface, self.setup.net_color, self.net_rect)
 
