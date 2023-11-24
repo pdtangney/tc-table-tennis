@@ -35,48 +35,41 @@ class Settings:
         # By default, paddle, net, pause/play button all share the
         # same color. Color of the ball is DIFFERENT (see below)
         # In order to visually distinguish it from the net and paddles.
-        self.equipment_color = (255, 255, 255)
-        self.bg_color = (20, 20, 20)
+        self.colors = {
+                'equipment_color': (255, 255, 255),
+                'bg_color': (20, 20, 20),
+                'paddle_color': (255, 255, 255),
+                'net_color': (255, 255, 255),
+                'button_color': (20, 20, 20),
+                'bttn_txt_color': (255, 255, 255),
+                'ball_color': (100, 255, 100),
+                }
         self.frame_rate = 30
         # How long to pause the game after missing the ball/scoring
         self.sleep_timer = 0.5
 
-        # Player settings
-        self.paddle_speed = 30
-        self.moving_up = False
-        self.moving_down = False
         # Paddle settings
-        self.paddle_color = self.equipment_color
         # Set the paddle size to be x = 3%, y = 13% of screen resolution
-        paddle_x = self.resolution[0] * .03
-        paddle_y = self.resolution[1] * .13
-        self.paddle_x = int(paddle_x)  # Thickness
-        self.paddle_y = int(paddle_y)  # Height
+        self.paddle = {'speed': 30,
+                       'moving_up': False,
+                       'moving_down': False,
+                       'x': self.resolution[0] * .03,
+                       'y': self.resolution[1] * .13,
+                       }
 
         # Center net settings
         # Net thickness is 4% of screen width.
-        thickness = self.resolution[0] * .04
-        self.net_thickness = int(thickness)
-        self.net_color = self.equipment_color
-
-        # Pause button settings
-        self.button_color = self.bg_color
-        self.bttn_txt_color = self.equipment_color
+        self.net_thickness = self.resolution[0] * .04
 
         # Ball settings
-        self.ball_color = (100, 255, 100)
         # The radius allows the ball to fit within the width of the net
-        ball_radius = self.resolution[0] * .04
-        self.ball_radius = int(ball_radius)
-        ball_speed = 20
-        self.ball_speed = int(ball_speed)
+        self.ball = {'radius': self.resolution[0] * .04,
+                     'speed': 20, }
 
         # Points settings
-        self.score_left = 0
-        self.score_right = 0
-        self.points = 1
-        self.win_level = 5
+        self.points = {
+                'score_left': 0, 'score_right': 0,
+                'score_points': 1, 'win_level': 5}
 
         # Life settings
-        self.misses_allowed = 3  # ...before losing a life
-        self.lives = 3
+        self.life_settings = {'misses_allowed': 3, 'lives': 3, }

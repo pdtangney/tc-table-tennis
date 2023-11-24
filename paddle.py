@@ -28,8 +28,9 @@ class Paddle(Sprite):
         self.screen_rect = game_instance.screen.get_rect()
         self.ball = game_instance.ball
         self.setup = game_instance.setup
-        self.color = self.setup.paddle_color
-        self.rect = pygame.Rect(0, 0, self.setup.paddle_x, self.setup.paddle_y)
+        self.color = self.setup.colors['paddle_color']
+        self.rect = pygame.Rect(0, 0, self.setup.paddle['x'],
+                                self.setup.paddle['y'])
         if location not in ('R', 'L'):
             print(f'\nError! Invalid paddle location {location}')
             print('Error most likely in __init__(self) in main.py.')
@@ -42,13 +43,13 @@ class Paddle(Sprite):
         # Needed when the pace of the game speeds up in later levels:
         self.y = float(self.rect.y)  # pylint: disable=invalid-name
 
-    def update(self):
+    def update(self, *args, **kwargs):
         """Update the paddle's position on screen."""
-        if self.setup.moving_up and self.rect.top > 5:
-            self.rect.y -= self.setup.paddle_speed
-        elif (self.setup.moving_down and
+        if self.setup.paddle['moving_up'] and self.rect.top > 5:
+            self.rect.y -= self.setup.paddle['speed']
+        elif (self.setup.paddle['moving_down'] and
                 self.rect.bottom < (self.screen_rect.bottom - 5)):
-            self.rect.y += self.setup.paddle_speed
+            self.rect.y += self.setup.paddle['speed']
 
 # pylint: disable=invalid-name
     def tc_update(self, y):

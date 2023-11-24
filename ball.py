@@ -21,36 +21,34 @@ class Ball(Sprite):
         self.screen = game_instance.screen
         self.screen_rect = game_instance.screen.get_rect()
         self.setup = game_instance.setup
-        self.color = self.setup.ball_color
-        self.sleep = self.setup.sleep_timer
-        # ball_radius, in future version ball may be round
-        self.rect = pygame.Rect(0, 0, self.setup.ball_radius,
-                                self.setup.ball_radius)
+        # ball['radius'], in future version ball may be round
+        self.rect = pygame.Rect(0, 0, self.setup.ball['radius'],
+                                self.setup.ball['radius'])
         self.surface = pygame.Surface((self.rect.width, self.rect.height))
-        pygame.draw.rect(self.surface, self.color, self.rect)
+        pygame.draw.rect(self.surface, self.setup.colors['ball_color']
+                         , self.rect)
         self.x_direction = None
-        self.speed = self.setup.ball_speed
-        # Needed when the pace of the game speeds up in later levels:
-        self.y = float(self.rect.y)
-        self.x = float(self.rect.x)
+        self.speed = self.setup.ball['speed']
 
     def drop(self):
         """Set the starting x_direction of the ball."""
-        time.sleep(self.sleep)
+        time.sleep(self.setup.sleep_timer)
         self.rect.center = self.screen_rect.center
         self.x_direction = random.randint(1, 2)
 
-    def update(self):
+    def update(self, *args, **kwargs):
         """Update the ball's position on screen."""
         if self.x_direction == 1:
             self.rect.x += self.speed
         else:
             self.rect.x -= self.speed
         if self.rect.left > self.screen_rect.right:
-            self.setup.score_left += self.setup.points
+            self.setup.points['score_left'] += (
+                    self.setup.points['score_points'])
             self.drop()
         if self.rect.right <= 0:
-            self.setup.score_right += self.setup.points
+            self.setup.points['score_right'] += (
+                    self.setup.points['score_points'])
             self.drop()
         if (self.rect.bottom >= self.screen_rect.bottom or
                 self.rect.top <= 0):

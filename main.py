@@ -61,14 +61,15 @@ class TableTennis:
         self.screen_rect = self.screen.get_rect()
         pygame.display.set_caption("Tc [ Table | Tennis ] ")
         self.bg_surface = pygame.Surface(self.setup.resolution)
-        self.bg_surface.fill(self.setup.bg_color)
+        self.bg_surface.fill(self.setup.colors['bg_color'])
 
     def draw_net(self):
         """Draw the net to the center of the screen."""
         self.net_rect = pygame.Rect(0, 0, self.setup.net_thickness,
                                     self.setup.resolution[1])
         self.net_rect.center = self.screen_rect.center
-        pygame.draw.rect(self.bg_surface, self.setup.net_color, self.net_rect)
+        pygame.draw.rect(self.bg_surface, self.setup.colors['net_color'],
+                         self.net_rect)
 
     def run(self):
         """Start the main game loop."""
@@ -105,16 +106,16 @@ class TableTennis:
                 self.game_active = True
         if self.game_active:
             if event.key == self.input.player_right_up:
-                self.setup.moving_up = True
+                self.setup.paddle['moving_up'] = True
             elif event.key == self.input.player_right_down:
-                self.setup.moving_down = True
+                self.setup.paddle['moving_down'] = True
 
     def _check_keyup_events(self, event):
         """Respond to key or button releases."""
         if event.key == self.input.player_right_up:
-            self.setup.moving_up = False
+            self.setup.paddle['moving_up'] = False
         elif event.key == self.input.player_right_down:
-            self.setup.moving_down = False
+            self.setup.paddle['moving_down'] = False
 
     def check_collisions(self):
         """Check for ball, paddle collisions."""
