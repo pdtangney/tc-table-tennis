@@ -25,20 +25,20 @@ class Ball(Sprite):
         self.rect = pygame.Rect(0, 0, self.setup.ball['radius'],
                                 self.setup.ball['radius'])
         self.surface = pygame.Surface((self.rect.width, self.rect.height))
-        pygame.draw.rect(self.surface, self.setup.colors['ball_color']
-                         , self.rect)
-        self.x_direction = None
+        pygame.draw.rect(self.surface,
+                         self.setup.colors['ball_color'], self.rect)
         self.speed = self.setup.ball['speed']
+        self.x_direction = None
 
     def drop(self):
         """Set the starting x_direction of the ball."""
         time.sleep(self.setup.sleep_timer)
         self.rect.center = self.screen_rect.center
-        self.x_direction = random.randint(1, 2)
+        self.x_direction = random.choice(['to_left', 'to_right'])
 
     def update(self, *args, **kwargs):
         """Update the ball's position on screen."""
-        if self.x_direction == 1:
+        if self.x_direction == 'to_right':
             self.rect.x += self.speed
         else:
             self.rect.x -= self.speed

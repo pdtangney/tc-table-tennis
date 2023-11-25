@@ -121,10 +121,10 @@ class TableTennis:
         """Check for ball, paddle collisions."""
         for paddle in self.paddles:
             if self.ball.rect.colliderect(paddle):
-                if self.ball.x_direction == 1:
-                    self.ball.x_direction = 2
+                if self.ball.x_direction == 'to_right':
+                    self.ball.x_direction = 'to_left'
                 else:
-                    self.ball.x_direction = 1
+                    self.ball.x_direction = 'to_right'
 
     def _update_screen(self):
         """Refresh objects on screen and flip to the new screen."""
