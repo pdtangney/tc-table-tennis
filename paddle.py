@@ -47,7 +47,7 @@ class Paddle(Sprite):
         """Update the paddle's position on screen."""
         if self.setup.paddle['moving_up'] and self.rect.top > 5:
             self.rect.y -= self.setup.paddle['speed']
-        elif (self.setup.paddle['moving_down'] and
+        if (self.setup.paddle['moving_down'] and
                 self.rect.bottom < (self.screen_rect.bottom - 5)):
             self.rect.y += self.setup.paddle['speed']
 
