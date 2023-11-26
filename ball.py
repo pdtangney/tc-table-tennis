@@ -46,12 +46,12 @@ class Ball(Sprite):
             self.setup.points['score_left'] += (
                     self.setup.points['score_points'])
             self.drop()
-        if self.rect.right <= 0:
+        elif self.rect.right <= self.screen_rect.left:
             self.setup.points['score_right'] += (
                     self.setup.points['score_points'])
             self.drop()
         if (self.rect.bottom >= self.screen_rect.bottom or
-                self.rect.top <= 0):
+                self.rect.top <= self.screen_rect.top):
             self.speed = -self.speed
 
     def draw(self):
