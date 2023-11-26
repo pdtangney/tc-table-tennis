@@ -29,15 +29,21 @@ class Ball(Sprite):
                          self.setup.colors['ball_color'], self.rect)
         self.speed = self.setup.ball['speed']
         self.x_direction = None
+        self.y_direction = None
 
     def drop(self):
         """Set the starting x_direction of the ball."""
         time.sleep(self.setup.pause_timer)
         self.rect.center = self.screen_rect.center
         self.x_direction = random.choice(['to_left', 'to_right'])
+        self.y_direction = random.choice(['to_top', 'to_bottom'])
 
     def update(self, *args, **kwargs):
         """Update the ball's position on screen."""
+        if self.y_direction == 'to_top':
+            self.rect.y -= self.speed
+        else:
+            self.rect.y += self.speed
         if self.x_direction == 'to_right':
             self.rect.x += self.speed
         else:
@@ -50,9 +56,10 @@ class Ball(Sprite):
             self.setup.points['score_right'] += (
                     self.setup.points['score_points'])
             self.drop()
-        if (self.rect.bottom >= self.screen_rect.bottom or
-                self.rect.top <= self.screen_rect.top):
-            self.speed = -self.speed
+        if self.rect.bottom >= self.screen_rect.bottom:
+            self.y_direction = 'to_top'
+        if self.rect.top <= self.screen_rect.top:
+            self.y_direction = 'to_bottom'
 
     def draw(self):
         """Draw the ball to the screen."""
