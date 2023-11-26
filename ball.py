@@ -48,18 +48,6 @@ class Ball(Sprite):
             self.rect.x += self.speed
         else:
             self.rect.x -= self.speed
-        if self.rect.left > self.screen_rect.right:
-            self.setup.points['score_left'] += (
-                    self.setup.points['score_points'])
-            self.drop()
-        elif self.rect.right <= self.screen_rect.left:
-            self.setup.points['score_right'] += (
-                    self.setup.points['score_points'])
-            self.drop()
-        if self.rect.bottom >= self.screen_rect.bottom:
-            self.y_direction = 'to_top'
-        if self.rect.top <= self.screen_rect.top:
-            self.y_direction = 'to_bottom'
 
     def draw(self):
         """Draw the ball to the screen."""
