@@ -46,7 +46,7 @@ class Settings:
                 }
         self.frame_rate = 30
         # How long to pause the game after missing the ball/scoring
-        self.sleep_timer = 0.5
+        self.pause_timer = 0.5
 
         # Paddle settings
         # Set the paddle size to be x = 3%, y = 13% of screen resolution

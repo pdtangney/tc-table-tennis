@@ -32,7 +32,7 @@ class Ball(Sprite):
 
     def drop(self):
         """Set the starting x_direction of the ball."""
-        time.sleep(self.setup.sleep_timer)
+        time.sleep(self.setup.pause_timer)
         self.rect.center = self.screen_rect.center
         self.x_direction = random.choice(['to_left', 'to_right'])
 
