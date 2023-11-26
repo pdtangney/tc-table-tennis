@@ -63,13 +63,16 @@ class Settings:
 
         # Ball settings
         # The radius allows the ball to fit within the width of the net
+        # CURRENTLY the ball is a square, so radius is a misnomer.
+        # It is named so, to facilitate easier future code changes.
         self.ball = {'radius': self.resolution[0] * .04,
-                     'speed': 20, }
+                     'speed': 15, }
 
         # Points settings
         self.points = {
-                'score_left': 0, 'score_right': 0,
-                'score_points': 1, 'win_level': 5}
+                'scoring': 1, 'win_level': 5}
 
         # Life settings
-        self.life_settings = {'misses_allowed': 3, 'lives': 3, }
+        # misses_allowed - How many times you can miss hitting the ball
+        # before losing a life.
+        self.lives = {'misses_allowed': 3, 'maximum': 3, }

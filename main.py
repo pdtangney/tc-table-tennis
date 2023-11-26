@@ -29,6 +29,7 @@ from input_controls import KeyboardInput
 from paddle import Paddle
 from button import Button
 from ball import Ball
+from stats import Stats
 
 
 class TableTennis:
@@ -42,7 +43,7 @@ class TableTennis:
         self.clock = pygame.time.Clock()
         self.input = KeyboardInput()
         self.game_active = False
-        # gamestats()
+        self.stats = Stats(self)
         # scoreboard()
         self.ball = Ball(self)
         self.paddles = pygame.sprite.Group()
@@ -130,12 +131,12 @@ class TableTennis:
     def check_ball_wall_collisions(self):
         """Check if ball has hit any of the four side walls."""
         if self.ball.rect.left > self.screen_rect.right:
-            self.setup.points['score_left'] += (
-                    self.setup.points['score_points'])
+            self.stats.score['left'] += (
+                    self.stats.scoring)
             self.ball.drop()
         elif self.ball.rect.right <= self.screen_rect.left:
-            self.setup.points['score_right'] += (
-                    self.setup.points['score_points'])
+            self.stats.score['right'] += (
+                    self.stats.scoring)
             self.ball.drop()
         if self.ball.rect.bottom >= self.screen_rect.bottom:
             self.ball.y_direction = 'to_top'

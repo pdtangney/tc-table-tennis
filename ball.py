@@ -21,13 +21,14 @@ class Ball(Sprite):
         self.screen = game_instance.screen
         self.screen_rect = game_instance.screen.get_rect()
         self.setup = game_instance.setup
+        self.stats = game_instance.stats
         # ball['radius'], in future version ball may be round
         self.rect = pygame.Rect(0, 0, self.setup.ball['radius'],
                                 self.setup.ball['radius'])
         self.surface = pygame.Surface((self.rect.width, self.rect.height))
         pygame.draw.rect(self.surface,
                          self.setup.colors['ball_color'], self.rect)
-        self.speed = self.setup.ball['speed']
+        self.speed = self.stats.ball_speed
         self.x_direction = None
         self.y_direction = None
 

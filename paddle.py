@@ -28,6 +28,7 @@ class Paddle(Sprite):
         self.screen_rect = game_instance.screen.get_rect()
         self.ball = game_instance.ball
         self.setup = game_instance.setup
+        self.stats = game_instance.stats
         self.color = self.setup.colors['paddle_color']
         self.rect = pygame.Rect(0, 0, self.setup.paddle['x'],
                                 self.setup.paddle['y'])
@@ -46,10 +47,10 @@ class Paddle(Sprite):
     def update(self, *args, **kwargs):
         """Update the paddle's position on screen."""
         if self.setup.paddle['moving_up'] and self.rect.top > 5:
-            self.rect.y -= self.setup.paddle['speed']
+            self.rect.y -= self.stats.paddle_speed
         if (self.setup.paddle['moving_down'] and
                 self.rect.bottom < (self.screen_rect.bottom - 5)):
-            self.rect.y += self.setup.paddle['speed']
+            self.rect.y += self.stats.paddle_speed
 
 # pylint: disable=invalid-name
     def tc_update(self, y):
