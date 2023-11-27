@@ -19,7 +19,6 @@ class Stats:
         game state to its defaults.
         """
         # self.paddle_speed = self.settings.paddle['speed']
-        # TODO adding levels will increase the value of self.scoring
         self.score = {'left': 0, 'right': 0}
         # This setting is dependent on the INITIAL difficulty setting.
         # not-implemented: defaults to 3
