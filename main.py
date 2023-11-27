@@ -30,6 +30,7 @@ from paddle import Paddle
 from button import Button
 from ball import Ball
 from stats import Stats
+from scoreboard import ScoreBoard
 
 
 class TableTennis:
@@ -44,7 +45,7 @@ class TableTennis:
         self.input = KeyboardInput()
         self.game_active = False
         self.stats = Stats(self)
-        # scoreboard()
+        self.score_board = ScoreBoard(self)
         self.ball = Ball(self)
         self.paddles = pygame.sprite.Group()
         self.player_right = Paddle(self, 'R')
@@ -74,12 +75,13 @@ class TableTennis:
 
     def run(self):
         """Start the main game loop."""
+        pygame.mouse.set_visible(False)
         self.ball.drop()
         self.stats.reset_stats()
+        self.score_board.prep_score()
         while True:
             self.check_input_events()
             if self.game_active:
-                pygame.mouse.set_visible(False)
                 self.player_right.update()
                 self.ball.update()
                 self.player_left.tc_update(self.ball.rect.centery)
@@ -146,14 +148,15 @@ class TableTennis:
             self.ball.y_direction = 'to_top'
         if self.ball.rect.top <= self.screen_rect.top:
             self.ball.y_direction = 'to_bottom'
+        self.score_board.prep_score()
 
     def check_remaining_lives_and_misses(self):
         """Check how many times the player has missed the ball.
         Then check how many, if any lives remain. When no lives remain,
         calls stats.reset_stats as the game is over."""
         for i in self.stats.player_miss:
-            print(f'{i} has {self.stats.player_lives[i]} lives')
-            print(f'{i} MISSES: {self.stats.player_miss[i]}')
+            # print(f'{i} has {self.stats.player_lives[i]} lives')
+            # print(f'{i} MISSES: {self.stats.player_miss[i]}')
             if self.stats.player_lives[i] == 0:
                 print(f'{i} lost')
                 self.stats.reset_stats()
@@ -164,6 +167,7 @@ class TableTennis:
     def _update_screen(self):
         """Refresh objects on screen and flip to the new screen."""
         self.screen.blit(self.bg_surface, (0, 0))
+        self.score_board.display_score()
         if self.game_active:
             for paddle in self.paddles.sprites():
                 paddle.draw()

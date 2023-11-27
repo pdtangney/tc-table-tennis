@@ -42,6 +42,7 @@ class Settings:
                 'net_color': (255, 255, 255),
                 'button_color': (20, 20, 20),
                 'bttn_txt_color': (255, 255, 255),
+                'score_txt_color': (255, 255, 255),
                 'ball_color': (100, 255, 100),
                 }
         self.frame_rate = 30
