@@ -25,9 +25,6 @@ class Stats:
         max_lives = self.settings.lives['maximum']
         self.player_lives = {'left': max_lives, 'right': max_lives}
 
-        self.max_misses = self.settings.lives['misses_allowed']
-        self.player_miss = {'left': self.max_misses, 'right': self.max_misses}
-
         self.scoring = self.settings.points['scoring']
         self.win_level_points = self.settings.points['win_level']
         self.ball_speed = self.settings.ball['speed']

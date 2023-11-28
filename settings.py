@@ -74,6 +74,5 @@ class Settings:
                 'scoring': 1, 'win_level': 5}
 
         # Life settings
-        # misses_allowed - How many times you can miss hitting the ball
         # before losing a life.
-        self.lives = {'misses_allowed': 3, 'maximum': 3, }
+        self.lives = {'maximum': 3, }

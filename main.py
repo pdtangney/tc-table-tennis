@@ -87,7 +87,7 @@ class TableTennis:
                 self.player_left.tc_update(self.ball.rect.centery)
                 self.check_ball_paddle_collisions()
                 self.check_ball_wall_collisions()
-                self.check_remaining_lives_and_misses()
+                self.check_remaining_lives()
             self._update_screen()
 
     def check_input_events(self):
@@ -137,12 +137,12 @@ class TableTennis:
         if self.ball.rect.left > self.screen_rect.right:
             self.stats.score['left'] += (
                     self.stats.scoring)
-            self.stats.player_miss['right'] -= 1
+            self.stats.player_lives['right'] -= 1
             self.ball.drop()
         elif self.ball.rect.right <= self.screen_rect.left:
             self.stats.score['right'] += (
                     self.stats.scoring)
-            self.stats.player_miss['left'] -= 1
+            self.stats.player_lives['left'] -= 1
             self.ball.drop()
         if self.ball.rect.bottom >= self.screen_rect.bottom:
             self.ball.y_direction = 'to_top'
@@ -150,19 +150,13 @@ class TableTennis:
             self.ball.y_direction = 'to_bottom'
         self.score_board.prep_score()
 
-    def check_remaining_lives_and_misses(self):
-        """Check how many times the player has missed the ball.
-        Then check how many, if any lives remain. When no lives remain,
-        calls stats.reset_stats as the game is over."""
-        for i in self.stats.player_miss:
-            # print(f'{i} has {self.stats.player_lives[i]} lives')
-            # print(f'{i} MISSES: {self.stats.player_miss[i]}')
+    def check_remaining_lives(self):
+        """Check how lives remain. When no lives remain, call
+        stats.reset_stats as the game is over."""
+        for i in self.stats.player_lives:
+            print(f'{i} has {self.stats.player_lives[i]} lives')
             if self.stats.player_lives[i] == 0:
-                print(f'{i} lost')
                 self.stats.reset_stats()
-            if self.stats.player_miss[i] == 0:
-                self.stats.player_lives[i] -= 1
-                self.stats.player_miss[i] = self.stats.max_misses
 
     def _update_screen(self):
         """Refresh objects on screen and flip to the new screen."""
