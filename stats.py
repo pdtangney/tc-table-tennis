@@ -21,7 +21,6 @@ class Stats:
         # self.paddle_speed = self.settings.paddle['speed']
         self.score = {'left': 0, 'right': 0}
         # This setting is dependent on the INITIAL difficulty setting.
-        # not-implemented: defaults to 3
         max_lives = self.settings.lives['maximum']
         self.player_lives = {'left': max_lives, 'right': max_lives}
 

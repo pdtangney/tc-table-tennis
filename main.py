@@ -79,6 +79,7 @@ class TableTennis:
         self.ball.drop()
         self.stats.reset_stats()
         self.score_board.prep_score()
+        self.score_board.prep_lives()
         while True:
             self.check_input_events()
             if self.game_active:
@@ -149,19 +150,19 @@ class TableTennis:
         if self.ball.rect.top <= self.screen_rect.top:
             self.ball.y_direction = 'to_bottom'
         self.score_board.prep_score()
+        self.score_board.prep_lives()
 
     def check_remaining_lives(self):
         """Check how lives remain. When no lives remain, call
         stats.reset_stats as the game is over."""
         for i in self.stats.player_lives:
-            print(f'{i} has {self.stats.player_lives[i]} lives')
             if self.stats.player_lives[i] == 0:
                 self.stats.reset_stats()
 
     def _update_screen(self):
         """Refresh objects on screen and flip to the new screen."""
         self.screen.blit(self.bg_surface, (0, 0))
-        self.score_board.display_score()
+        self.score_board.display_score_and_lives()
         if self.game_active:
             for paddle in self.paddles.sprites():
                 paddle.draw()
