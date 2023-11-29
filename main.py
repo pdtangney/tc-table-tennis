@@ -76,7 +76,6 @@ class TableTennis:
 
     def run(self):
         """Start the main game loop."""
-        pygame.mouse.set_visible(False)
         self.ball.drop()
         self.stats.reset_stats()
         self.score_board.prep_score()
@@ -112,6 +111,7 @@ class TableTennis:
                 pygame.mouse.set_visible(True)
             elif not self.game_active:
                 self.game_active = True
+                pygame.mouse.set_visible(False)
         if self.game_active:
             if event.key == self.input.player_right_up:
                 self.setup.paddle['moving_up'] = True
