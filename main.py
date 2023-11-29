@@ -32,6 +32,7 @@ from ball import Ball
 from stats import Stats
 from scoreboard import ScoreBoard
 
+import audio
 
 class TableTennis:
     """Set up the game."""
@@ -128,6 +129,7 @@ class TableTennis:
         """Check for ball - paddle collisions."""
         for paddle in self.paddles:
             if self.ball.rect.colliderect(paddle):
+                audio.paddle_hit_snd.play()
                 if self.ball.x_direction == 'to_right':
                     self.ball.x_direction = 'to_left'
                 else:
