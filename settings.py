@@ -37,21 +37,21 @@ class Settings:
         # In order to visually distinguish it from the net and paddles.
         self.colors = {
                 'equipment_color': (255, 255, 255),
-                'bg_color': (20, 20, 20),
+                'bg_color': (26, 153, 0),
                 'paddle_color': (255, 255, 255),
                 'net_color': (255, 255, 255),
-                'button_color': (20, 20, 20),
+                'button_color': (26, 153, 0),   # Should be same as bg_color!
                 'bttn_txt_color': (255, 255, 255),
                 'score_txt_color': (255, 255, 255),
-                'ball_color': (100, 255, 100),
+                'ball_color': (255, 128, 0),
                 }
-        self.frame_rate = 30
+        self.frame_rate = 60
         # How long to pause the game after missing the ball/scoring
         self.pause_timer = 0.5
 
         # Paddle settings
         # Set the paddle size to be x = 3%, y = 13% of screen resolution
-        self.paddle = {'speed': 30,
+        self.paddle = {'speed': 20,
                        'moving_up': False,
                        'moving_down': False,
                        'x': self.resolution[0] * .03,
@@ -67,7 +67,7 @@ class Settings:
         # CURRENTLY the ball is a square, so radius is a misnomer.
         # It is named so, to facilitate easier future code changes.
         self.ball = {'radius': self.resolution[0] * .04,
-                     'speed': 15, }
+                     'speed': 10, }
 
         # Points settings
         self.points = {
