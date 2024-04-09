@@ -52,10 +52,9 @@ class Paddle(Sprite):
                 self.rect.bottom < (self.screen_rect.bottom - 5)):
             self.rect.y += self.stats.paddle_speed
 
-# pylint: disable=invalid-name
-    def tc_update(self, y):
+    def tc_update(self, ball_y):
         """Update tc(AI) player's location."""
-        self.rect.centery = y
+        self.rect.centery = ball_y
 
     def draw(self):
         """Draw the paddle to the screen."""
