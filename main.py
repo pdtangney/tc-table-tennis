@@ -73,13 +73,13 @@ class TableTennis:
     def draw_net(self):
         """Draw the net to the center of the screen."""
         self.net = pygame.Rect(0, 0, self.setup.net_thickness,
-                          self.setup.resolution[1])
+                               self.setup.resolution[1])
         self.net.center = self.screen_rect.center
         pygame.draw.rect(self.bg_surface, self.setup.color['net'], self.net)
 
     def run(self):
         """Start the main game loop."""
-        self.stats.reset()
+        self.stats.init()
         self.ball.drop()
         self.score_board.prep_score()
         self.score_board.prep_lives()
@@ -162,7 +162,6 @@ class TableTennis:
         for player_side, lives_remaining in self.stats.player_lives.items():
             if lives_remaining == 0:
                 self.stats.reset()
-
 
     def _update_screen(self):
         """Refresh objects on screen and flip to the new screen."""

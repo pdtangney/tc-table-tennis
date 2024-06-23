@@ -9,6 +9,13 @@ class Stats:
         self.instance = game_instance
         self.reset()
 
+    def init(self):
+        """Initialise stats
+
+        calls Stats().reset()
+        """
+        self.reset()
+
     def reset(self):
         """Intialize stats which can be changed before gameplay.
 
@@ -18,8 +25,6 @@ class Stats:
         game state to its defaults.
         """
         self.score = {'left': 0, 'right': 0}
-        # FIXME Are some of these settings redundant? Should I be calling
-        # some directly from Settings(), vs Stats()??
         self.player_lives = {'left': self.instance.setup.lives['maximum'],
                              'right': self.instance.setup.lives['maximum']}
 

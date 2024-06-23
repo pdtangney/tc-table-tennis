@@ -1,3 +1,4 @@
+"""Module to manage sounds in game."""
 import pygame
 
 pygame.mixer.init()
