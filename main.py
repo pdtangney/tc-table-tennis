@@ -49,7 +49,6 @@ class TableTennis:
         self.clock = pygame.time.Clock()
         self.input = KeyboardInput()
         self.game_active = False
-        self.game_over = False
         self.stats = Stats(self)
         self.score_board = ScoreBoard(self)
         self.ball = Ball(self)
@@ -162,7 +161,6 @@ class TableTennis:
         stats.reset as the game is over."""
         for player_side, lives_remaining in self.stats.player_lives.items():
             if lives_remaining == 0:
-                self.game_over = True
                 self.stats.reset()
 
 
@@ -174,15 +172,8 @@ class TableTennis:
             for paddle in self.paddles.sprites():
                 paddle.draw()
             self.ball.draw()
-        # Only draw PAUSE if game is not over:
-        test = f'active: {self.game_active}\nover: {self.game_over}\n'
-        print(test)
         if not self.game_active:
-            if self.game_over:
-                game_over_bttn = Button(self, "Game Over")
-                game_over_bttn.draw()
-            else:
-                self.pause_bttn.draw()
+            self.pause_bttn.draw()
 
         pygame.display.update()
         self.clock.tick_busy_loop(self.setup.frame_rate)
