@@ -50,8 +50,8 @@ class Paddle(Sprite):
         play_area_border = 5
         if self.setup.paddle['moving_up'] and self.rect.top > play_area_border:
             self.rect.y -= self.stats.paddle_speed
-        if (self.setup.paddle['moving_down'] and
-                self.rect.bottom < (self.screen_rect.bottom - play_area_border)):
+        if (self.setup.paddle['moving_down'] and self.rect.bottom
+                < (self.screen_rect.bottom - play_area_border)):
             self.rect.y += self.stats.paddle_speed
 
     def tc_update(self, ball_y):
