@@ -39,7 +39,7 @@ class Settings:
         self.color = {
                 'ball': (255, 128, 0),
                 'background': (26, 153, 0),
-                'button': (62, 153, 36),   # Should be same as background
+                'button': (26, 153, 0),   # Should be same as background
                 'equipment': (255, 255, 255),
                 'net': (222, 222, 222),
                 'paddle': (255, 255, 255),

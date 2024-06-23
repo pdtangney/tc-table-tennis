@@ -7,10 +7,9 @@ class Button:
 
     def __init__(self, game_instance, message):
         """Initialize button attributes."""
+        self.instance = game_instance
         self.screen = game_instance.screen
         self.screen_rect = self.screen.get_rect()
-        # TODO Set dimentions as a ratio of self.screen resolution
-        self.dimentions = [100, 50]  # width, height
         self.color = {
                 'button': game_instance.setup.color['button'],
                 'text': game_instance.setup.color['bttn_txt'],
@@ -23,11 +22,15 @@ class Button:
 
         Center the text on the button.
         """
-        self.font = pygame.font.SysFont(None, 50)
-        self.rect = pygame.Rect(0, 0, self.dimentions[0], self.dimentions[1])
+        # Set button dimentions, font_size as relative to screen rez.
+        dimensions = [self.instance.setup.resolution[0] *.15,
+                           self.instance.setup.resolution[1] *.1]  # w x h
+        font_size = int(self.instance.setup.resolution[0] * .10)
+        self.font = pygame.font.SysFont(None, font_size)
+        self.rect = pygame.Rect(0, 0, dimensions[0], dimensions[1])
         self.rect.center = self.screen_rect.center
         self.msg_image = self.font.render(msg, True, self.color['text'],
-                                          self.color['button'])
+                                          )
         self.msg_image_rect = self.msg_image.get_rect()
         self.msg_image_rect.center = self.rect.center
 
