@@ -30,9 +30,14 @@ class Settings:
         ball color. Game speed and frame-rate.
     """
 
+    game_name = "Tc [ Table | Tennis ] "
+    game_name_alt = "Tc Table Tennis"  # For use in terminal help.
+    version = game_name + "0.0.01b (06/23/2024)"
+
     def __init__(self):
         """Initialize the settings."""
-        self.resolution = (1024, 768)
+        self.screen_x = 1024
+        self.screen_y = 768
         # By default, paddle, net, pause/play button all share the
         # same color. Color of the ball is DIFFERENT (see below)
         # In order to visually distinguish it from the net and paddles.
@@ -50,24 +55,27 @@ class Settings:
         # How long to pause the game after missing the ball/scoring
         self.pause_timer = 0.5
 
+    def load_setup(self):
+        """Call this method after (re)setting the screen resoultion,
+        so that scaling of objects works correctly."""
         # Paddle settings
         # Set the paddle size to be x = 3%, y = 13% of screen resolution
         self.paddle = {'speed': 20,
                        'moving_up': False,
                        'moving_down': False,
-                       'x': self.resolution[0] * .03,   # Width and
-                       'y': self.resolution[1] * .13,   # height of paddle
+                       'x': self.screen_x * .03,   # Width and
+                       'y': self.screen_y * .13,   # height of paddle
                        }
 
         # Center net settings
         # Net thickness is 4% of screen width.
-        self.net_thickness = self.resolution[0] * .04
+        self.net_thickness = self.screen_x * .04
 
         # Ball settings
         # The radius allows the ball to fit within the width of the net
         # CURRENTLY the ball is a square, so radius is a misnomer.
         # It is named so, to facilitate easier future code changes.
-        self.ball = {'radius': self.resolution[0] * .04,
+        self.ball = {'radius': self.screen_x * .04,
                      'speed': 10, }
 
         # Points settings

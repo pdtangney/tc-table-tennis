@@ -23,9 +23,9 @@ class Button:
         Center the text on the button.
         """
         # Set button dimentions, font_size as relative to screen rez.
-        dimensions = [self.instance.setup.resolution[0] * .15,
-                      self.instance.setup.resolution[1] * .1]  # w x h
-        font_size = int(self.instance.setup.resolution[0] * .10)
+        dimensions = [self.instance.setup.screen_x * .15,
+                      self.instance.setup.screen_y * .1]  # w x h
+        font_size = int(self.instance.setup.screen_x * .10)
         self.font = pygame.font.SysFont(None, font_size)
         self.rect = pygame.Rect(0, 0, dimensions[0], dimensions[1])
         self.rect.center = self.screen_rect.center

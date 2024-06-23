@@ -25,6 +25,7 @@ import sys      # sys.exit()
 
 import pygame
 
+import cmd_args
 from settings import Settings
 from input_controls import KeyboardInput
 from paddle import Paddle
@@ -46,6 +47,7 @@ class TableTennis:
         pygame.init()
         self.setup = Settings()
         self._init_display()
+        self.setup.load_setup()
         self.clock = pygame.time.Clock()
         self.input = KeyboardInput()
         self.game_active = False
@@ -64,16 +66,23 @@ class TableTennis:
 
     def _init_display(self):
         """Initialize the display and window title."""
-        self.screen = pygame.display.set_mode(self.setup.resolution)
+        if cmd_args.args.fullscreen:
+            self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+            self.setup.screen_x = self.screen.get_rect().width
+            self.setup.screen_y = self.screen.get_rect().height
+        else:
+            self.screen = pygame.display.set_mode((self.setup.screen_x,
+                                                  self.setup.screen_y))
         self.screen_rect = self.screen.get_rect()
-        pygame.display.set_caption("Tc [ Table | Tennis ] ")
-        self.bg_surface = pygame.Surface(self.setup.resolution)
+        pygame.display.set_caption(self.setup.game_name)
+        self.bg_surface = pygame.Surface((self.setup.screen_x,
+                                         self.setup.screen_y))
         self.bg_surface.fill(self.setup.color['background'])
 
     def draw_net(self):
         """Draw the net to the center of the screen."""
         self.net = pygame.Rect(0, 0, self.setup.net_thickness,
-                               self.setup.resolution[1])
+                               self.setup.screen_y)
         self.net.center = self.screen_rect.center
         pygame.draw.rect(self.bg_surface, self.setup.color['net'], self.net)
 
