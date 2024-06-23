@@ -3,6 +3,7 @@
 Tc Table Tennis - A top-down view electronic table tennis game.
 Copyright (C) 2023 Peter Tangney (peteATrockytcgames.com)
 
+                               GPLv3
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -26,24 +27,24 @@ class Settings:
 
     Settings are:
         Screen resolution, background color, paddle colors,
-        ball color. Game speed and frame-rate (frame_rate).
+        ball color. Game speed and frame-rate.
     """
 
     def __init__(self):
         """Initialize the settings."""
-        self.resolution = (1024, 768)  # x, y = w, h
+        self.resolution = (1024, 768)
         # By default, paddle, net, pause/play button all share the
         # same color. Color of the ball is DIFFERENT (see below)
         # In order to visually distinguish it from the net and paddles.
-        self.colors = {
-                'equipment_color': (255, 255, 255),
-                'bg_color': (26, 153, 0),
-                'paddle_color': (255, 255, 255),
-                'net_color': (255, 255, 255),
-                'button_color': (26, 153, 0),   # Should be same as bg_color!
-                'bttn_txt_color': (255, 255, 255),
-                'score_txt_color': (255, 255, 255),
-                'ball_color': (255, 128, 0),
+        self.color = {
+                'ball': (255, 128, 0),
+                'background': (26, 153, 0),
+                'button': (62, 153, 36),   # Should be same as background
+                'equipment': (255, 255, 255),
+                'net': (222, 222, 222),
+                'paddle': (255, 255, 255),
+                'bttn_txt': (255, 255, 255),
+                'score_txt': (255, 255, 255),
                 }
         self.frame_rate = 60
         # How long to pause the game after missing the ball/scoring
@@ -54,8 +55,8 @@ class Settings:
         self.paddle = {'speed': 20,
                        'moving_up': False,
                        'moving_down': False,
-                       'x': self.resolution[0] * .03,
-                       'y': self.resolution[1] * .13,
+                       'x': self.resolution[0] * .03,   # Width and
+                       'y': self.resolution[1] * .13,   # height of paddle
                        }
 
         # Center net settings
@@ -70,8 +71,7 @@ class Settings:
                      'speed': 10, }
 
         # Points settings
-        self.points = {
-                'scoring': 1, 'win_level': 5}
+        self.points = {'scoring': 1, 'win_level': 5}
 
         # Life settings
         # before losing a life.

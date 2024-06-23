@@ -4,6 +4,7 @@ Main game module. Most of the magic lies here.
     Tc Table Tennis - A top-down view electronic table tennis game.
     Copyright (C) 2023 Peter Tangney (peteATrockytcgames.com)
 
+                               GPLv3
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +21,7 @@ Main game module. Most of the magic lies here.
     Open the file LICENSE in a text editor for more information.
 """
 
-import sys
+import sys      # sys.exit()
 
 import pygame
 
@@ -31,11 +32,14 @@ from button import Button
 from ball import Ball
 from stats import Stats
 from scoreboard import ScoreBoard
-
 import audio
 
+
 class TableTennis:
-    """Set up the game."""
+    """Main game class. Initializes Settings(), sets up input controls,
+    initialize game stats. Future versions will save certain stats to a
+    file, to enable later retrieval. eg: high score board.
+    """
 
     def __init__(self):
         """Initialize the game and create game resources."""
@@ -45,6 +49,7 @@ class TableTennis:
         self.clock = pygame.time.Clock()
         self.input = KeyboardInput()
         self.game_active = False
+        self.game_over = False
         self.stats = Stats(self)
         self.score_board = ScoreBoard(self)
         self.ball = Ball(self)
@@ -64,22 +69,22 @@ class TableTennis:
         self.screen_rect = self.screen.get_rect()
         pygame.display.set_caption("Tc [ Table | Tennis ] ")
         self.bg_surface = pygame.Surface(self.setup.resolution)
-        self.bg_surface.fill(self.setup.colors['bg_color'])
+        self.bg_surface.fill(self.setup.color['background'])
 
     def draw_net(self):
         """Draw the net to the center of the screen."""
-        self.net_rect = pygame.Rect(0, 0, self.setup.net_thickness,
-                                    self.setup.resolution[1])
-        self.net_rect.center = self.screen_rect.center
-        pygame.draw.rect(self.bg_surface, self.setup.colors['net_color'],
-                         self.net_rect)
+        self.net = pygame.Rect(0, 0, self.setup.net_thickness,
+                          self.setup.resolution[1])
+        self.net.center = self.screen_rect.center
+        pygame.draw.rect(self.bg_surface, self.setup.color['net'], self.net)
 
     def run(self):
         """Start the main game loop."""
+        self.stats.reset()
         self.ball.drop()
-        self.stats.reset_stats()
         self.score_board.prep_score()
         self.score_board.prep_lives()
+        # Main game loop:
         while True:
             self.check_input_events()
             if self.game_active:
@@ -136,15 +141,13 @@ class TableTennis:
                     self.ball.x_direction = 'to_right'
 
     def check_ball_wall_collisions(self):
-        """Check if ball has hit any of the four side walls."""
+        """ChecK if ball has hit any of the four side walls."""
         if self.ball.rect.left > self.screen_rect.right:
-            self.stats.score['left'] += (
-                    self.stats.scoring)
+            self.stats.score['left'] += self.stats.scoring
             self.stats.player_lives['right'] -= 1
             self.ball.drop()
         elif self.ball.rect.right <= self.screen_rect.left:
-            self.stats.score['right'] += (
-                    self.stats.scoring)
+            self.stats.score['right'] += self.stats.scoring
             self.stats.player_lives['left'] -= 1
             self.ball.drop()
         if self.ball.rect.bottom >= self.screen_rect.bottom:
@@ -155,11 +158,13 @@ class TableTennis:
         self.score_board.prep_lives()
 
     def check_remaining_lives(self):
-        """Check how lives remain. When no lives remain, call
-        stats.reset_stats as the game is over."""
-        for i in self.stats.player_lives:
-            if self.stats.player_lives[i] == 0:
-                self.stats.reset_stats()
+        """Check how many lives remain. When none remain, call
+        stats.reset as the game is over."""
+        for player_side, lives_remaining in self.stats.player_lives.items():
+            if lives_remaining == 0:
+                self.game_over = True
+                self.stats.reset()
+
 
     def _update_screen(self):
         """Refresh objects on screen and flip to the new screen."""
@@ -169,8 +174,16 @@ class TableTennis:
             for paddle in self.paddles.sprites():
                 paddle.draw()
             self.ball.draw()
+        # Only draw PAUSE if game is not over:
+        test = f'active: {self.game_active}\nover: {self.game_over}\n'
+        print(test)
         if not self.game_active:
-            self.pause_bttn.draw()
+            if self.game_over:
+                game_over_bttn = Button(self, "Game Over")
+                game_over_bttn.draw()
+            else:
+                self.pause_bttn.draw()
+
         pygame.display.update()
         self.clock.tick_busy_loop(self.setup.frame_rate)
 

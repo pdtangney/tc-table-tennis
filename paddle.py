@@ -29,7 +29,7 @@ class Paddle(Sprite):
         self.ball = game_instance.ball
         self.setup = game_instance.setup
         self.stats = game_instance.stats
-        self.color = self.setup.colors['paddle_color']
+        self.color = self.setup.color['paddle']
         self.rect = pygame.Rect(0, 0, self.setup.paddle['x'],
                                 self.setup.paddle['y'])
         if location not in ('R', 'L'):
@@ -46,6 +46,7 @@ class Paddle(Sprite):
 
     def update(self, *args, **kwargs):
         """Update the paddle's position on screen."""
+        # FIXME magic number [5]:
         if self.setup.paddle['moving_up'] and self.rect.top > 5:
             self.rect.y -= self.stats.paddle_speed
         if (self.setup.paddle['moving_down'] and

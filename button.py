@@ -9,10 +9,11 @@ class Button:
         """Initialize button attributes."""
         self.screen = game_instance.screen
         self.screen_rect = self.screen.get_rect()
+        # TODO Set dimentions as a ratio of self.screen resolution
         self.dimentions = [100, 50]  # width, height
         self.color = {
-                'button': game_instance.setup.colors['button_color'],
-                'text': game_instance.setup.colors['bttn_txt_color'],
+                'button': game_instance.setup.color['button'],
+                'text': game_instance.setup.color['bttn_txt'],
                 }
         self._prepare_message(message)
 
