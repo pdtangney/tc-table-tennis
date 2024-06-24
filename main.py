@@ -168,7 +168,7 @@ class TableTennis:
     def check_remaining_lives(self):
         """Check how many lives remain. When none remain, call
         stats.reset as the game is over."""
-        for player_side, lives_remaining in self.stats.player_lives.items():
+        for lives_remaining in self.stats.player_lives.values():
             if lives_remaining == 0:
                 self.stats.reset()
 
