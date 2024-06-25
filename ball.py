@@ -16,25 +16,22 @@ class Ball(Sprite):
 
     def __init__(self, game_instance):
         """Initialize the game ball."""
-        # pylint: disable=invalid-name
         super().__init__()
+        self.instance = game_instance
         self.screen = game_instance.screen
-        self.screen_rect = game_instance.screen.get_rect()
-        self.setup = game_instance.setup
-        self.stats = game_instance.stats
-        # ball['radius'], in future version ball may be round
-        self.rect = pygame.Rect(0, 0, self.setup.ball['radius'],
-                                self.setup.ball['radius'])
+        self.screen_rect = self.screen.get_rect()
+        self.rect = pygame.Rect(0, 0, self.instance.setup.ball['radius'],
+                                self.instance.setup.ball['radius'])
         self.surface = pygame.Surface((self.rect.width, self.rect.height))
-        pygame.draw.rect(self.surface,
-                         self.setup.colors['ball_color'], self.rect)
-        self.speed = self.stats.ball_speed
+        pygame.draw.rect(self.surface, self.instance.setup.color['ball'],
+                         self.rect)
+        self.speed = self.instance.stats.ball_speed
         self.x_direction = None
         self.y_direction = None
 
     def drop(self):
         """Set the starting x_direction of the ball."""
-        time.sleep(self.setup.pause_timer)
+        time.sleep(self.instance.setup.pause_timer)
         self.rect.center = self.screen_rect.center
         self.x_direction = random.choice(['to_left', 'to_right'])
         self.y_direction = random.choice(['to_top', 'to_bottom'])

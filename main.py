@@ -4,6 +4,7 @@ Main game module. Most of the magic lies here.
     Tc Table Tennis - A top-down view electronic table tennis game.
     Copyright (C) 2023 Peter Tangney (peteATrockytcgames.com)
 
+                               GPLv3
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
@@ -20,10 +21,11 @@ Main game module. Most of the magic lies here.
     Open the file LICENSE in a text editor for more information.
 """
 
-import sys
+import sys      # sys.exit()
 
 import pygame
 
+import cmd_args
 from settings import Settings
 from input_controls import KeyboardInput
 from paddle import Paddle
@@ -31,16 +33,21 @@ from button import Button
 from ball import Ball
 from stats import Stats
 from scoreboard import ScoreBoard
+import audio
 
 
 class TableTennis:
-    """Set up the game."""
+    """Main game class. Initializes Settings(), sets up input controls,
+    initialize game stats. Future versions will save certain stats to a
+    file, to enable later retrieval. eg: high score board.
+    """
 
     def __init__(self):
         """Initialize the game and create game resources."""
         pygame.init()
         self.setup = Settings()
         self._init_display()
+        self.setup.load_setup()
         self.clock = pygame.time.Clock()
         self.input = KeyboardInput()
         self.game_active = False
@@ -59,26 +66,33 @@ class TableTennis:
 
     def _init_display(self):
         """Initialize the display and window title."""
-        self.screen = pygame.display.set_mode(self.setup.resolution)
+        if cmd_args.args.fullscreen:
+            self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+            self.setup.screen_x = self.screen.get_rect().width
+            self.setup.screen_y = self.screen.get_rect().height
+        else:
+            self.screen = pygame.display.set_mode((self.setup.screen_x,
+                                                  self.setup.screen_y))
         self.screen_rect = self.screen.get_rect()
-        pygame.display.set_caption("Tc [ Table | Tennis ] ")
-        self.bg_surface = pygame.Surface(self.setup.resolution)
-        self.bg_surface.fill(self.setup.colors['bg_color'])
+        pygame.display.set_caption(self.setup.game_name)
+        self.bg_surface = pygame.Surface((self.setup.screen_x,
+                                         self.setup.screen_y))
+        self.bg_surface.fill(self.setup.color['background'])
 
     def draw_net(self):
         """Draw the net to the center of the screen."""
-        self.net_rect = pygame.Rect(0, 0, self.setup.net_thickness,
-                                    self.setup.resolution[1])
-        self.net_rect.center = self.screen_rect.center
-        pygame.draw.rect(self.bg_surface, self.setup.colors['net_color'],
-                         self.net_rect)
+        self.net = pygame.Rect(0, 0, self.setup.net_thickness,
+                               self.setup.screen_y)
+        self.net.center = self.screen_rect.center
+        pygame.draw.rect(self.bg_surface, self.setup.color['net'], self.net)
 
     def run(self):
         """Start the main game loop."""
-        pygame.mouse.set_visible(False)
+        self.stats.init()
         self.ball.drop()
-        self.stats.reset_stats()
         self.score_board.prep_score()
+        self.score_board.prep_lives()
+        # Main game loop:
         while True:
             self.check_input_events()
             if self.game_active:
@@ -87,7 +101,7 @@ class TableTennis:
                 self.player_left.tc_update(self.ball.rect.centery)
                 self.check_ball_paddle_collisions()
                 self.check_ball_wall_collisions()
-                self.check_remaining_lives_and_misses()
+                self.check_remaining_lives()
             self._update_screen()
 
     def check_input_events(self):
@@ -110,6 +124,7 @@ class TableTennis:
                 pygame.mouse.set_visible(True)
             elif not self.game_active:
                 self.game_active = True
+                pygame.mouse.set_visible(False)
         if self.game_active:
             if event.key == self.input.player_right_up:
                 self.setup.paddle['moving_up'] = True
@@ -127,53 +142,47 @@ class TableTennis:
         """Check for ball - paddle collisions."""
         for paddle in self.paddles:
             if self.ball.rect.colliderect(paddle):
+                audio.paddle_hit_snd.play()
                 if self.ball.x_direction == 'to_right':
                     self.ball.x_direction = 'to_left'
                 else:
                     self.ball.x_direction = 'to_right'
 
     def check_ball_wall_collisions(self):
-        """Check if ball has hit any of the four side walls."""
+        """ChecK if ball has hit any of the four side walls."""
         if self.ball.rect.left > self.screen_rect.right:
-            self.stats.score['left'] += (
-                    self.stats.scoring)
-            self.stats.player_miss['right'] -= 1
+            self.stats.score['left'] += self.stats.scoring
+            self.stats.player_lives['right'] -= 1
             self.ball.drop()
         elif self.ball.rect.right <= self.screen_rect.left:
-            self.stats.score['right'] += (
-                    self.stats.scoring)
-            self.stats.player_miss['left'] -= 1
+            self.stats.score['right'] += self.stats.scoring
+            self.stats.player_lives['left'] -= 1
             self.ball.drop()
         if self.ball.rect.bottom >= self.screen_rect.bottom:
             self.ball.y_direction = 'to_top'
         if self.ball.rect.top <= self.screen_rect.top:
             self.ball.y_direction = 'to_bottom'
         self.score_board.prep_score()
+        self.score_board.prep_lives()
 
-    def check_remaining_lives_and_misses(self):
-        """Check how many times the player has missed the ball.
-        Then check how many, if any lives remain. When no lives remain,
-        calls stats.reset_stats as the game is over."""
-        for i in self.stats.player_miss:
-            # print(f'{i} has {self.stats.player_lives[i]} lives')
-            # print(f'{i} MISSES: {self.stats.player_miss[i]}')
-            if self.stats.player_lives[i] == 0:
-                print(f'{i} lost')
-                self.stats.reset_stats()
-            if self.stats.player_miss[i] == 0:
-                self.stats.player_lives[i] -= 1
-                self.stats.player_miss[i] = self.stats.max_misses
+    def check_remaining_lives(self):
+        """Check how many lives remain. When none remain, call
+        stats.reset as the game is over."""
+        for lives_remaining in self.stats.player_lives.values():
+            if lives_remaining == 0:
+                self.stats.reset()
 
     def _update_screen(self):
         """Refresh objects on screen and flip to the new screen."""
         self.screen.blit(self.bg_surface, (0, 0))
-        self.score_board.display_score()
+        self.score_board.display_score_and_lives()
         if self.game_active:
             for paddle in self.paddles.sprites():
                 paddle.draw()
             self.ball.draw()
         if not self.game_active:
             self.pause_bttn.draw()
+
         pygame.display.update()
         self.clock.tick_busy_loop(self.setup.frame_rate)
 

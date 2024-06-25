@@ -29,7 +29,7 @@ class Paddle(Sprite):
         self.ball = game_instance.ball
         self.setup = game_instance.setup
         self.stats = game_instance.stats
-        self.color = self.setup.colors['paddle_color']
+        self.color = self.setup.color['paddle']
         self.rect = pygame.Rect(0, 0, self.setup.paddle['x'],
                                 self.setup.paddle['y'])
         if location not in ('R', 'L'):
@@ -46,16 +46,17 @@ class Paddle(Sprite):
 
     def update(self, *args, **kwargs):
         """Update the paddle's position on screen."""
-        if self.setup.paddle['moving_up'] and self.rect.top > 5:
+        # Ball will change direction if it collides with playing_area_border
+        play_area_border = 5
+        if self.setup.paddle['moving_up'] and self.rect.top > play_area_border:
             self.rect.y -= self.stats.paddle_speed
-        if (self.setup.paddle['moving_down'] and
-                self.rect.bottom < (self.screen_rect.bottom - 5)):
+        if (self.setup.paddle['moving_down'] and self.rect.bottom
+                < (self.screen_rect.bottom - play_area_border)):
             self.rect.y += self.stats.paddle_speed
 
-# pylint: disable=invalid-name
-    def tc_update(self, y):
+    def tc_update(self, ball_y):
         """Update tc(AI) player's location."""
-        self.rect.centery = y
+        self.rect.centery = ball_y
 
     def draw(self):
         """Draw the paddle to the screen."""

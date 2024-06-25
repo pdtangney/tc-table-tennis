@@ -3,6 +3,7 @@
 Tc Table Tennis - A top-down view electronic table tennis game.
 Copyright (C) 2023 Peter Tangney (peteATrockytcgames.com)
 
+                               GPLv3
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -26,54 +27,60 @@ class Settings:
 
     Settings are:
         Screen resolution, background color, paddle colors,
-        ball color. Game speed and frame-rate (frame_rate).
+        ball color. Game speed and frame-rate.
     """
+
+    game_name = "Tc [ Table | Tennis ] "
+    game_name_alt = "Tc Table Tennis"  # For use in terminal help.
+    version = game_name + "0.0.01b (06/23/2024)"
 
     def __init__(self):
         """Initialize the settings."""
-        self.resolution = (1024, 768)  # x, y = w, h
+        self.screen_x = 1024
+        self.screen_y = 768
         # By default, paddle, net, pause/play button all share the
         # same color. Color of the ball is DIFFERENT (see below)
         # In order to visually distinguish it from the net and paddles.
-        self.colors = {
-                'equipment_color': (255, 255, 255),
-                'bg_color': (20, 20, 20),
-                'paddle_color': (255, 255, 255),
-                'net_color': (255, 255, 255),
-                'button_color': (20, 20, 20),
-                'bttn_txt_color': (255, 255, 255),
-                'score_txt_color': (255, 255, 255),
-                'ball_color': (100, 255, 100),
+        self.color = {
+                'ball': (255, 128, 0),
+                'background': (26, 153, 0),
+                'button': (26, 153, 0),   # Should be same as background
+                'equipment': (255, 255, 255),
+                'net': (222, 222, 222),
+                'paddle': (255, 255, 255),
+                'bttn_txt': (255, 255, 255),
+                'score_txt': (255, 255, 255),
                 }
-        self.frame_rate = 30
+        self.frame_rate = 60
         # How long to pause the game after missing the ball/scoring
         self.pause_timer = 0.5
 
+    def load_setup(self):
+        """Call this method after (re)setting the screen resoultion,
+        so that scaling of objects works correctly."""
         # Paddle settings
         # Set the paddle size to be x = 3%, y = 13% of screen resolution
-        self.paddle = {'speed': 30,
+        self.paddle = {'speed': 20,
                        'moving_up': False,
                        'moving_down': False,
-                       'x': self.resolution[0] * .03,
-                       'y': self.resolution[1] * .13,
+                       'x': self.screen_x * .03,   # Width and
+                       'y': self.screen_y * .13,   # height of paddle
                        }
 
         # Center net settings
         # Net thickness is 4% of screen width.
-        self.net_thickness = self.resolution[0] * .04
+        self.net_thickness = self.screen_x * .04
 
         # Ball settings
         # The radius allows the ball to fit within the width of the net
         # CURRENTLY the ball is a square, so radius is a misnomer.
         # It is named so, to facilitate easier future code changes.
-        self.ball = {'radius': self.resolution[0] * .04,
-                     'speed': 15, }
+        self.ball = {'radius': self.screen_x * .04,
+                     'speed': 10, }
 
         # Points settings
-        self.points = {
-                'scoring': 1, 'win_level': 5}
+        self.points = {'scoring': 1, 'win_level': 5}
 
         # Life settings
-        # misses_allowed - How many times you can miss hitting the ball
         # before losing a life.
-        self.lives = {'misses_allowed': 3, 'maximum': 3, }
+        self.lives = {'maximum': 3, }

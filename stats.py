@@ -7,10 +7,16 @@ class Stats:
     def __init__(self, game_instance):
         """Initialize stats."""
         self.instance = game_instance
-        self.settings = game_instance.setup
-        self.reset_stats()
+        self.reset()
 
-    def reset_stats(self):
+    def init(self):
+        """Initialise stats
+
+        calls Stats().reset()
+        """
+        self.reset()
+
+    def reset(self):
         """Intialize stats which can be changed before gameplay.
 
         Most of these stats also change throughout gameplay.
@@ -18,18 +24,12 @@ class Stats:
         When a new game is started this method is called to reset the
         game state to its defaults.
         """
-        # self.paddle_speed = self.settings.paddle['speed']
         self.score = {'left': 0, 'right': 0}
-        # This setting is dependent on the INITIAL difficulty setting.
-        # not-implemented: defaults to 3
-        max_lives = self.settings.lives['maximum']
-        self.player_lives = {'left': max_lives, 'right': max_lives}
+        self.player_lives = {'left': self.instance.setup.lives['maximum'],
+                             'right': self.instance.setup.lives['maximum']}
 
-        self.max_misses = self.settings.lives['misses_allowed']
-        self.player_miss = {'left': self.max_misses, 'right': self.max_misses}
-
-        self.scoring = self.settings.points['scoring']
-        self.win_level_points = self.settings.points['win_level']
-        self.ball_speed = self.settings.ball['speed']
-        self.paddle_speed = self.settings.paddle['speed']
+        self.scoring = self.instance.setup.points['scoring']
+        self.win_level_points = self.instance.setup.points['win_level']
+        self.ball_speed = self.instance.setup.ball['speed']
+        self.paddle_speed = self.instance.setup.paddle['speed']
         self.instance.game_active = False
