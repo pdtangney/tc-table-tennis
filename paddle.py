@@ -46,7 +46,6 @@ class Paddle(Sprite):
 
     def update(self, *args, **kwargs):
         """Update the paddle's position on screen."""
-        # Ball will change direction if it collides with playing_area_border
         play_area_border = 5
         if self.setup.paddle['moving_up'] and self.rect.top > play_area_border:
             self.rect.y -= self.stats.paddle_speed

@@ -52,14 +52,11 @@ class Settings:
                 'score_txt': (255, 255, 255),
                 }
         self.frame_rate = 60
-        # How long to pause the game after missing the ball/scoring
         self.pause_timer = 0.5
 
     def load_setup(self):
         """Call this method after (re)setting the screen resoultion,
         so that scaling of objects works correctly."""
-        # Paddle settings
-        # Set the paddle size to be x = 3%, y = 13% of screen resolution
         self.paddle = {'speed': 20,
                        'moving_up': False,
                        'moving_down': False,
@@ -67,20 +64,11 @@ class Settings:
                        'y': self.screen_y * .13,   # height of paddle
                        }
 
-        # Center net settings
-        # Net thickness is 4% of screen width.
         self.net_thickness = self.screen_x * .04
 
-        # Ball settings
-        # The radius allows the ball to fit within the width of the net
-        # CURRENTLY the ball is a square, so radius is a misnomer.
-        # It is named so, to facilitate easier future code changes.
         self.ball = {'radius': self.screen_x * .04,
                      'speed': 10, }
 
-        # Points settings
         self.points = {'scoring': 1, 'win_level': 5}
 
-        # Life settings
-        # before losing a life.
         self.lives = {'maximum': 3, }

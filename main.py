@@ -21,7 +21,7 @@ Main game module. Most of the magic lies here.
     Open the file LICENSE in a text editor for more information.
 """
 
-import sys      # sys.exit()
+import sys
 
 import pygame
 
@@ -38,8 +38,7 @@ import audio
 
 class TableTennis:
     """Main game class. Initializes Settings(), sets up input controls,
-    initialize game stats. Future versions will save certain stats to a
-    file, to enable later retrieval. eg: high score board.
+    initialize game stats.
     """
 
     def __init__(self):
