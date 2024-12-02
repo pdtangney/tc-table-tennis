@@ -1,12 +1,11 @@
+Fix Speed issues when using fullscreen mode
+
 Move scaling settings to a single file to allow changing the scaling from a
 single file
 Ex. font_scale  = settings.screen_x * .01
 
 Implements speed changes.
 	Allow the game to speed up on later levels
-
-Fix scoring:
-	Move the score so it's not hidden by the paddle
 
 Update README.md
 
@@ -19,7 +18,6 @@ Allow swapping between fullscreen and windowed mode on the fly.
 Show current level number
 Show levels won by each player
 
-Implement sound effects
 Save high scores to a file
 
 When the game is over, display 'GAME OVER' rather than 'PAUSE'

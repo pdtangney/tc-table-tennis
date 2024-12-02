@@ -1,7 +1,7 @@
 """Module to manage configurable settings.
 
 Tc Table Tennis - A top-down view electronic table tennis game.
-Copyright (C) 2023 Peter Tangney (peteATrockytcgames.com)
+Copyright (C) 2023 - 2024 Peter Tangney (peteATrockytcgames.com)
 
                                GPLv3
 This program is free software: you can redistribute it and/or modify
@@ -32,12 +32,14 @@ class Settings:
 
     game_name = "Tc [ Table | Tennis ] "
     game_name_alt = "Tc Table Tennis"  # For use in terminal help.
-    version = game_name + "0.0.01b (06/23/2024)"
+    code_name = "(Shackleford) "
+    version = (game_name + code_name + "0.0.01c (12/01/2024)")
 
     def __init__(self):
-        """Initialize the settings."""
+        """Initialize game settings."""
         self.screen_x = 1024
         self.screen_y = 768
+
         # By default, paddle, net, pause/play button all share the
         # same color. Color of the ball is DIFFERENT (see below)
         # In order to visually distinguish it from the net and paddles.
@@ -51,6 +53,7 @@ class Settings:
                 'bttn_txt': (255, 255, 255),
                 'score_txt': (255, 255, 255),
                 }
+
         self.frame_rate = 60
         self.pause_timer = 0.5
 
