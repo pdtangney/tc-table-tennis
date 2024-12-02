@@ -77,6 +77,7 @@ class TableTennis:
             pygame.display.set_caption(self.setup.version)
         else:
             pygame.display.set_caption(self.setup.game_name)
+
         self.bg_surface = pygame.Surface((self.setup.screen_x,
                                          self.setup.screen_y))
         self.bg_surface.fill(self.setup.color['background'])

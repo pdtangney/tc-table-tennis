@@ -1,3 +1,5 @@
+Add Start screen with instructions on how to pause
+
 Fix Speed issues when using fullscreen mode
 
 Move scaling settings to a single file to allow changing the scaling from a
