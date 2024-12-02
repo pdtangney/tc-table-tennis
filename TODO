@@ -1,0 +1,27 @@
+Move scaling settings to a single file to allow changing the scaling from a
+single file
+Ex. font_scale  = settings.screen_x * .01
+
+Implements speed changes.
+	Allow the game to speed up on later levels
+
+Fix scoring:
+	Move the score so it's not hidden by the paddle
+
+Update README.md
+
+Add levels:
+	for every n scores increase the level
+	for example, for every 5 balls scored on either side, increase the
+	level
+
+Allow swapping between fullscreen and windowed mode on the fly.
+Show current level number
+Show levels won by each player
+
+Implement sound effects
+Save high scores to a file
+
+When the game is over, display 'GAME OVER' rather than 'PAUSE'
+
+Allow the AI to lose

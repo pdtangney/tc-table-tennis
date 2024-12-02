@@ -2,7 +2,7 @@
 Main game module. Most of the magic lies here.
 
     Tc Table Tennis - A top-down view electronic table tennis game.
-    Copyright (C) 2023 Peter Tangney (peteATrockytcgames.com)
+    Copyright (C) 2023 - 2024 Peter Tangney (peteATrockytcgames.com)
 
                                GPLv3
     This program is free software: you can redistribute it and/or modify
@@ -174,13 +174,13 @@ class TableTennis:
     def _update_screen(self):
         """Refresh objects on screen and flip to the new screen."""
         self.screen.blit(self.bg_surface, (0, 0))
-        self.score_board.display_score_and_lives()
         if self.game_active:
             for paddle in self.paddles.sprites():
                 paddle.draw()
             self.ball.draw()
         if not self.game_active:
             self.pause_bttn.draw()
+        self.score_board.display_score_and_lives()
 
         pygame.display.update()
         self.clock.tick_busy_loop(self.setup.frame_rate)
