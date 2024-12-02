@@ -73,7 +73,10 @@ class TableTennis:
             self.screen = pygame.display.set_mode((self.setup.screen_x,
                                                   self.setup.screen_y))
         self.screen_rect = self.screen.get_rect()
-        pygame.display.set_caption(self.setup.game_name)
+        if cmd_args.args.debug:
+            pygame.display.set_caption(self.setup.version)
+        else:
+            pygame.display.set_caption(self.setup.game_name)
         self.bg_surface = pygame.Surface((self.setup.screen_x,
                                          self.setup.screen_y))
         self.bg_surface.fill(self.setup.color['background'])
