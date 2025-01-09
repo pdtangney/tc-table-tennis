@@ -2,7 +2,7 @@
 Main game module. Most of the magic lies here.
 
     Tc Table Tennis - A top-down view electronic table tennis game.
-    Copyright (C) 2023 - 2024 Peter Tangney (peteATrockytcgames.com)
+    Copyright (C) 2023 - 2025 Peter Tangney (peteATrockytcgames.com)
 
                                GPLv3
     This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,6 @@ import pygame
 
 import cmd_args
 from settings import Settings
-from input_controls import KeyboardInput
 from paddle import Paddle
 from button import Button
 from ball import Ball
@@ -48,7 +47,8 @@ class TableTennis:
         self._init_display()
         self.setup.load_setup()
         self.clock = pygame.time.Clock()
-        self.input = KeyboardInput()
+        self.input = {'quit': pygame.K_q, 'p_right_up': pygame.K_UP,
+                      'p_right_down': pygame.K_DOWN, 'pause': pygame.K_p, }
         self.game_active = False
         self.stats = Stats(self)
         self.score_board = ScoreBoard(self)
@@ -119,9 +119,9 @@ class TableTennis:
 
     def _check_keydown_events(self, event):
         """Respond to key or button presses."""
-        if event.key == self.input.quit:
+        if event.key == self.input['quit']:
             sys.exit()
-        elif event.key == self.input.pause:
+        elif event.key == self.input['pause']:
             if self.game_active:
                 self.game_active = False
                 pygame.mouse.set_visible(True)
@@ -129,16 +129,16 @@ class TableTennis:
                 self.game_active = True
                 pygame.mouse.set_visible(False)
         if self.game_active:
-            if event.key == self.input.player_right_up:
+            if event.key == self.input['p_right_up']:
                 self.setup.paddle['moving_up'] = True
-            elif event.key == self.input.player_right_down:
+            elif event.key == self.input['p_right_down']:
                 self.setup.paddle['moving_down'] = True
 
     def _check_keyup_events(self, event):
         """Respond to key or button releases."""
-        if event.key == self.input.player_right_up:
+        if event.key == self.input['p_right_up']:
             self.setup.paddle['moving_up'] = False
-        elif event.key == self.input.player_right_down:
+        elif event.key == self.input['p_right_down']:
             self.setup.paddle['moving_down'] = False
 
     def check_ball_paddle_collisions(self):
