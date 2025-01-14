@@ -1,5 +1,8 @@
 Add Start screen with instructions on how to pause
 
+#PRIORITY_1:
+    Smoothen controls. The paddle doesn't move smoothly relative to game speed.
+
 Fix Speed issues when using fullscreen mode
 
 Move scaling settings to a single file to allow changing the scaling from a
@@ -23,5 +26,3 @@ Show levels won by each player
 Save high scores to a file
 
 When the game is over, display 'GAME OVER' rather than 'PAUSE'
-
-Allow the AI to lose
