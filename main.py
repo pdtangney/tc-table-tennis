@@ -22,6 +22,7 @@ Main game module. Most of the magic lies here.
 """
 
 import sys
+import time
 
 import pygame
 
@@ -58,7 +59,7 @@ class TableTennis:
         self.player_left = Paddle(self, 'L')
         self.paddles.add(self.player_right)
         self.paddles.add(self.player_left)
-        self.pause_bttn = Button(self, "PAUSE")
+        self.pause_bttn = Button(self, 'PAUSE')
         self.draw_net()
         pygame.event.set_allowed([pygame.QUIT, pygame.KEYDOWN,
                                   pygame.KEYUP])
@@ -99,12 +100,17 @@ class TableTennis:
         while True:
             self.check_input_events()
             if self.game_active:
+                start = time.time()
                 self.player_right.update()
                 self.ball.update()
-                self.player_left.tc_update(self.ball.rect.centery)
                 self.check_ball_paddle_collisions()
                 self.check_ball_wall_collisions()
                 self.check_remaining_lives()
+                end = time.time()
+                if ((end - start) % self.setup.frame_rate == 0):
+                    self.player_left.tc_update(self.ball.rect.centery)
+                else:
+                    self.player_left.tc_update(self.ball.rect.centery - 70)
             self._update_screen()
 
     def check_input_events(self):

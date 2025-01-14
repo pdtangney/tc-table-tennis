@@ -1,7 +1,7 @@
 """Module to manage configurable settings.
 
 Tc Table Tennis - A top-down view electronic table tennis game.
-Copyright (C) 2023 - 2024 Peter Tangney (peteATrockytcgames.com)
+Copyright (C) 2023 - 2025 Peter Tangney (peteATrockytcgames.com)
 
                                GPLv3
 This program is free software: you can redistribute it and/or modify
@@ -30,10 +30,10 @@ class Settings:
         ball color. Game speed and frame-rate.
     """
 
-    game_name = "Tc [ Table | Tennis ] "
-    game_name_alt = "Tc Table Tennis"  # For use in terminal help.
-    code_name = "(Shackleford) "
-    version = (game_name + code_name + "0.0.01c (12/01/2024)")
+    game_name = 'Tc [ Table | Tennis ] '
+    game_name_alt = 'Tc Table Tennis'  # For use in terminal help.
+    code_name = '(Shi shi SHAA!) '
+    version = game_name + code_name + '0.0.10 (01/14/2025)'
 
     def __init__(self):
         """Initialize game settings."""
@@ -57,6 +57,12 @@ class Settings:
         self.frame_rate = 60
         self.pause_timer = 0.5
 
+        self.paddle = None
+        self.net_thickness = None
+        self.ball = None
+        self.points = None
+        self.lives = None
+
     def load_setup(self):
         """Call this method after (re)setting the screen resoultion,
         so that scaling of objects works correctly."""
@@ -70,7 +76,7 @@ class Settings:
         self.net_thickness = self.screen_x * .04
 
         self.ball = {'radius': self.screen_x * .04,
-                     'speed': 10, }
+                     'speed': 7, }
 
         self.points = {'scoring': 1, 'win_level': 5}
 

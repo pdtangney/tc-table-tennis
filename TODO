@@ -1,5 +1,8 @@
 Add Start screen with instructions on how to pause
 
+#PRIORITY_1:
+    Smoothen controls. The paddle doesn't move smoothly relative to game speed.
+
 Fix Speed issues when using fullscreen mode
 
 Move scaling settings to a single file to allow changing the scaling from a
