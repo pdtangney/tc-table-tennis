@@ -33,7 +33,7 @@ class Settings:
     game_name = 'Tc [ Table | Tennis ] '
     game_name_alt = 'Tc Table Tennis'  # For use in terminal help.
     code_name = '(Shi shi SHAA!) '
-    version = game_name + code_name + '0.0.10 (01/14/2025)'
+    version = game_name + code_name + '0.0.12 (01/14/2025)'
 
     def __init__(self):
         """Initialize game settings."""
@@ -54,7 +54,7 @@ class Settings:
                 'score_txt': (255, 255, 255),
                 }
 
-        self.frame_rate = 60
+        self.frame_rate = 80
         self.pause_timer = 0.5
 
         self.paddle = None
@@ -66,7 +66,7 @@ class Settings:
     def load_setup(self):
         """Call this method after (re)setting the screen resoultion,
         so that scaling of objects works correctly."""
-        self.paddle = {'speed': 20,
+        self.paddle = {'speed': self.frame_rate // 6,
                        'moving_up': False,
                        'moving_down': False,
                        'x': self.screen_x * .03,   # Width and

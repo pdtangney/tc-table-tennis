@@ -26,5 +26,3 @@ Show levels won by each player
 Save high scores to a file
 
 When the game is over, display 'GAME OVER' rather than 'PAUSE'
-
-Allow the AI to lose
